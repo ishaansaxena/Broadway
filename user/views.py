@@ -4,4 +4,4 @@ from django.http import HttpResponse
 
 # @login_required
 def profile(request):
-    return HttpResponse("Users index page")
+    return HttpResponse("User profile page")

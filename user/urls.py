@@ -20,7 +20,7 @@ urlpatterns = [
         auth_views.logout,
         name = 'logout',
         kwargs = {
-            'next_page': '/u/login'
+            'next_page': '/'
         }
     ),
 ]

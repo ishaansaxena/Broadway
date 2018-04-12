@@ -1,0 +1,10 @@
+<h1>Welcome to Broadway</h1>
+{% if user.is_authenticated %}
+    <p>
+        Hello, {{ user.username }}. You're already logged in. <a href="{% url 'logout' %}">[Logout]</a>
+    </p>
+{% else %}
+    <p>
+        <a href="{% url 'login' %}">Login</a>
+    </p>
+{% endif %}

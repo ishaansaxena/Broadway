@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from django.contrib.auth.decorators import login_required 
+from django.contrib.auth.decorators import login_required
 
+# Require login to see own profile
 @login_required
 def profile(request):
     context = {}

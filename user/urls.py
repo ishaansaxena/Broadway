@@ -5,7 +5,9 @@ from .forms import LoginForm
 from . import views
 
 urlpatterns = [
+    # Default path in /u/ is profile description/editing
     path('', views.profile, name='profile'),
+    # u/login is the default login path; calls the login form
     url(
         r'^login/$',
         auth_views.login,
@@ -15,6 +17,7 @@ urlpatterns = [
             'authentication_form': LoginForm,
         }
     ),
+    # u/logout is the default logout path; gives logout command
     url(
         r'^logout/$',
         auth_views.logout,
@@ -23,4 +26,5 @@ urlpatterns = [
             'next_page': '/'
         }
     ),
+    # TODO: Create path to view other profiles
 ]

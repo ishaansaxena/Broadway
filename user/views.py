@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-# from django.contrib.auth.decorators import login_required
+from django.template import loader
+from django.contrib.auth.decorators import login_required
 
-# @login_required
+@login_required
 def profile(request):
-    return HttpResponse("User profile page")
+    context = {}
+    template = loader.get_template('user/profile.html')
+    return HttpResponse(template.render(context, request))

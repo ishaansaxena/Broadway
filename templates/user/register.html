@@ -33,6 +33,10 @@
                 <div class="logo">Broadway</div>
                 <div class="form-container">
                     <form method="post" action="{% url 'login' %}">
+                        {% if form.name.errors %}
+                            {{ form.name.errors }}
+                        {% endif %}
+                        {{ form.email }}
                         {% csrf_token %}
                         {% if form.username.errors %}
                             {{ form.username.errors }}

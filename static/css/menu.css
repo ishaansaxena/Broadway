@@ -17,39 +17,64 @@
 ::-webkit-scrollbar-thumb {
   background: #2196F3; }
 
-.menu {
+.masthead {
+  display: block;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
   width: 100%;
-  background: #FFFFFF; }
-  .menu .menu-item {
+  background: #EEEEEE;
+  padding: 1rem 0;
+  text-align: center; }
+  .masthead .logo {
+    display: inline-block;
     position: relative;
-    display: block;
-    padding: 1.5rem 1rem;
-    float: right;
-    font-family: "Lato", sans-serif;
-    font-size: 1rem;
-    color: #212121;
-    height: 1rem; }
-    .menu .menu-item:hover {
-      background: #EEEEEE; }
-    .menu .menu-item.search {
-      float: left;
-      margin: 0; }
-      .menu .menu-item.search input {
-        margin: 0; }
-  .menu .logo {
+    text-decoration: none;
+    color: inherit;
     font-family: "Playfair Display", serif;
     font-weight: bolder;
-    font-size: 2rem;
-    height: 2rem;
-    border-right: solid 1px #EEEEEE; }
-    .menu .logo .text {
+    font-size: 2.5rem;
+    padding: 2rem 4rem;
+    background: #FFFFFF; }
+    .masthead .logo::after {
+      content: '';
+      display: block;
       position: relative;
+      background: #2196F3;
+      width: 60%;
+      height: 0.3rem; }
+  .masthead .container {
+    background: #FFFFFF; }
+
+.menu {
+  display: block;
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%); }
+  .menu .menu-item {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin: 0 0.25rem;
+    color: #FFFFFF;
+    background: #2196F3;
+    -webkit-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease; }
+    .menu .menu-item svg, .menu .menu-item i {
+      display: block;
+      position: relative;
+      margin: auto;
       top: 50%;
       -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
       transform: translateY(-50%); }
-    .menu .logo.menu-item {
-      float: left;
-      padding: 1rem 1rem; }
-  .menu .container {
-    height: 4rem; }
+    .menu .menu-item:hover {
+      background: #009688; }

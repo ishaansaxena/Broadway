@@ -11,24 +11,38 @@
         <link rel="stylesheet" href="{% static 'css/main.css' %}" />
         <link rel="stylesheet" href="{% static 'css/menu.css' %}" />
         <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}" />
+        <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
+        integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
+        crossorigin="anonymous"></script>
         <!-- Assets -->
         {% block assets %}
         {% endblock %}
     </head>
     <body>
         {% if user.is_authenticated %}
-            <div class="menu">
+            <div class="masthead">
                 <div class="container">
-                    <div class="menu-item logo">
+                    <a href="{% url 'index' %}" class="logo">
                         <div class="text">Broadway</div>
-                    </div>
-                    <!-- <div class="menu-item search"> -->
-                        <!-- <input type="text" name="" value=""> -->
-                    <!-- </div> -->
-                    <div class="menu-item">Hello</div>
-                    <div class="menu-item">World</div>
-                    <div class="menu-item">Menu</div>
+                    </a>
                 </div>
+            </div>
+            <div class="menu">
+                <a class="menu-item" href="#">
+                    <i class="fas fa-search"></i>
+                </a>
+                <a class="menu-item" href="#">
+                    <i class="fas fa-heart"></i>
+                </a>
+                <a class="menu-item" href="{% url 'profile' %}">
+                    <i class="fas fa-user"></i>
+                </a>
+                <a class="menu-item" href="#">
+                    <i class="fas fa-cog"></i>
+                </a>
+                <a class="menu-item" href="{% url 'logout' %}">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
             </div>
         {% else %}
         {% endif %}

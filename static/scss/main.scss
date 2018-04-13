@@ -51,8 +51,15 @@ body{
     font-weight: 400;
     font-size: 1rem;
     background: $pm;
+    transition: all 0.15s ease;
+    &:hover {
+        background: $pd;
+    }
     &.accent {
         background: lighten($ac, 5%);
+        &:hover {
+            background: $ac;
+        }
     }
 }
 

@@ -1,45 +1,63 @@
 @import "settings.scss";
 
-.menu {
+.masthead {
+    display: block;
+    position: sticky;
+    top: 0;
+    left: 0;
     width: 100%;
-    background: $wl;
-    .menu-item {
-        position: relative;
-        display: block;
-        padding: 1.5rem 1rem;
-        float: right;
-        font-family: "Lato", sans-serif;
-        font-size: 1rem;
-        color: $bl;
-        height: 1rem;
-        &:hover {
-            background: $wd;
-        }
-        &.search {
-            float: left;
-            margin: 0;
-            input {
-                margin: 0;
-            }
-        }
-    }
+    background: $wd;
+    padding: 1rem 0;
+    text-align: center;
     .logo {
+        display: inline-block;
+        position: relative;
+        text-decoration: none;
+        color: inherit;
         font-family: "Playfair Display", serif;
         font-weight: bolder;
-        font-size: 2rem;
-        height: 2rem;
-        border-right: solid 1px $wd;
-        .text {
+        font-size: 2.5rem;
+        padding: 2rem 4rem;
+        background: $wl;
+        &::after{
+            content: '';
+            display: block;
             position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        &.menu-item {
-            float: left;
-            padding: 1rem 1rem;
+            background: $pm;
+            width: 60%; height: 0.3rem;
         }
     }
     .container {
-        height: 4rem;
+        background: $wl;
+    }
+}
+
+.menu {
+    display: block;
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    .menu-item {
+        display: inline-block;
+        position: relative;
+        text-decoration: none;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        margin: 0 0.25rem;
+        color: $wl;
+        background: $pm;
+        transition: all 0.25s ease;
+        svg, i {
+            display: block;
+            position: relative;
+            margin: auto;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        &:hover {
+            background: $ac;
+        }
     }
 }

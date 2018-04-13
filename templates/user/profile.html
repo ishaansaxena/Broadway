@@ -1,2 +1,24 @@
-<p>Profile {{ user.username }}</p>
-<p>Profile {{ user.email }}</p>
+<!-- Extend base file -->
+{% extends "base.html" %}
+
+<!-- Load static files -->
+{% load static %}
+
+<!-- Create title -->
+{% block title %}
+    Broadway - Profile
+{% endblock %}
+
+<!-- Load assets -->
+{% block assets %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+<!-- Main content -->
+{% block content %}
+<div class="container">
+    <p>Username {{ user.username }}</p>
+    <p>Email {{ user.email }}</p>
+    <p>Bio {{ user.boi }}</p>
+</div>
+{% endblock %}

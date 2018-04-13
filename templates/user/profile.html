@@ -23,19 +23,19 @@
         </div>
         <div class="profile profile-data">
             <h1 class="username">{{user.username}}</h1>
-            <p class="data">
-                <span class="interactions">0</span> followers
+            <p class="data-outer">
+                {{ profile.bio }}
             </p>
-            <p class="data">
-                <span class="interactions">0</span> following
-            </p>
-            <p class="data">
-                <span class="interactions">0</span> posts
+            <p class="data-outer">
+                <span class="data"><span class="interactions">0</span> followers</span>
+                <span class="data"><span class="interactions">0</span> following</span>
+                <span class="data"><span class="interactions">0</span> posts</span>
             </p>
         </div>
     </div>
-    <div class="section">
-    </div>
+    <!-- <div class="section">
+
+    </div> -->
     <!-- <form action="{% url 'profile' %}" method="post">
         {{ user.username }}
         {{ user.email }}

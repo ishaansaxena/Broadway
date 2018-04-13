@@ -16,7 +16,11 @@ def profile(request):
         return render(request, 'user/profile.html', {})
     else:
         form = ProfileUpdateForm(instance=user_profile)
-        return render(request, 'user/profile.html', {'form': form})
+        context = {
+            'form': form,
+            'profile': user_profile,
+        }
+        return render(request, 'user/profile.html', context)
 
     # context = {}
     # template = loader.get_template('user/profile.html')

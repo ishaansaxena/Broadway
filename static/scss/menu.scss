@@ -1,0 +1,45 @@
+@import "settings.scss";
+
+.menu {
+    width: 100%;
+    background: $wl;
+    .menu-item {
+        position: relative;
+        display: block;
+        padding: 1.5rem 1rem;
+        float: right;
+        font-family: "Lato", sans-serif;
+        font-size: 1rem;
+        color: $bl;
+        height: 1rem;
+        &:hover {
+            background: $wd;
+        }
+        &.search {
+            float: left;
+            margin: 0;
+            input {
+                margin: 0;
+            }
+        }
+    }
+    .logo {
+        font-family: "Playfair Display", serif;
+        font-weight: bolder;
+        font-size: 2rem;
+        height: 2rem;
+        border-right: solid 1px $wd;
+        .text {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        &.menu-item {
+            float: left;
+            padding: 1rem 1rem;
+        }
+    }
+    .container {
+        height: 4rem;
+    }
+}

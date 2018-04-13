@@ -28,6 +28,14 @@ body{
     background: $wd;
 }
 
+.container {
+    display: block;
+    position: relative;
+    margin: auto;
+    // padding: 1.5rem 0;
+    width: 75%;
+}
+
 .btn {
     cursor: pointer;
     text-decoration: none;

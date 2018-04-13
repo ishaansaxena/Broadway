@@ -18,9 +18,9 @@
         {% if user.is_authenticated %}
             <!-- Menu -->
         {% else %}
-            <!-- Main content -->
-            {% block content %}
-            {% endblock %}
         {% endif %}
+        <!-- Main content -->
+        {% block content %}
+        {% endblock %}
     </body>
 </html>

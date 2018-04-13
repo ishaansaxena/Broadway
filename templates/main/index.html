@@ -18,11 +18,12 @@
 {% block content %}
     {% if user.is_authenticated %}
         <!-- Main index page -->
+        <h1>Logged in: Index</h1>
     {% else %}
         <div class="login">
             <div class="logo">Broadway</div>
             <div class="btn-container">
-                <a href="/u/login" class="btn">Login</a>
+                <a href="{% url 'login' %}" class="btn">Login</a>
                 <a class="btn accent">Sign Up</a>
             </div>
         </div>

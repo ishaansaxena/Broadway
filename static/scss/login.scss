@@ -3,12 +3,12 @@
 .login {
     display: block;
     position: absolute;
+    padding: 5rem 6rem 4rem 6rem;
+    background: $wl;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
 
     .logo {
-        padding: 5rem 6rem;
-        background: $wl;
         font-family: "Playfair Display", serif;
         font-weight: bolder;
         font-size: 4rem;
@@ -21,6 +21,14 @@
             width: 60%; height: 0.5rem;
         }
     }
+
+    p {
+        text-align: center;
+    }
+}
+
+.form-container {
+    margin: 3rem 0 0 0;
 }
 
 .btn-container {

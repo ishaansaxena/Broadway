@@ -1,0 +1,20 @@
+// Palette
+$pd:    #1976D2;    // Primary Dark
+$pm:    #2196F3;    // Primary
+$pl:    #BBDEFB;    // Primary Light
+$pp:    #19B5FE;    // Alternative Primary
+$wl:    #FFFFFF;    // White Light
+$wd:    #EEEEEE;    // White Dark
+$ac:    #009688;    // Accent Color
+$bl:    #212121;    // Black
+$gd:    #757575;    // Grey Dark
+$gl:    #BDBDBD;    // Grey Light
+
+// Selection
+::selection {background: transparent;}
+::-moz-selection {background: transparent;}
+
+// Scroll bar
+::-webkit-scrollbar       {width: 5px; height: 5px;}
+::-webkit-scrollbar-track {background: $wd;}
+::-webkit-scrollbar-thumb {background: $pm;}

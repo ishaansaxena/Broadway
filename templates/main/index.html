@@ -1,10 +1,30 @@
-<h1>Welcome to Broadway</h1>
-{% if user.is_authenticated %}
-    <p>
-        Hello, {{ user.username }}. You're already logged in. <a href="{% url 'logout' %}">[Logout]</a>
-    </p>
-{% else %}
-    <p>
-        <a href="{% url 'login' %}">Login</a>
-    </p>
-{% endif %}
+<!-- Extend base file -->
+{% extends "base.html" %}
+
+<!-- Load static files -->
+{% load static %}
+
+<!-- Create title -->
+{% block title %}
+    Broadway - Home
+{% endblock %}
+
+<!-- Load assets -->
+{% block assets %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+<!-- Main content -->
+{% block content %}
+    {% if user.is_authenticated %}
+        <!-- Main index page -->
+    {% else %}
+        <div class="login">
+            <div class="logo">Broadway</div>
+            <div class="btn-container">
+                <a href="/u/login" class="btn">Login</a>
+                <a class="btn accent">Sign Up</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

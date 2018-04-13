@@ -19,35 +19,32 @@
         {% endblock %}
     </head>
     <body>
+        <div class="main">
         {% if user.is_authenticated %}
-            <div class="masthead">
+            <div class="menu">
                 <div class="container">
-                    <a href="{% url 'index' %}" class="logo">
+                    <a href="{% url 'index' %}" class="logo menu-item">
                         <div class="text">Broadway</div>
                     </a>
+                    <a class="menu-item" href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                    <a class="menu-item" href="{% url 'profile' %}">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a class="menu-item" href="#">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <a class="menu-item" href="#">
+                        <i class="fas fa-search"></i>
+                    </a>
                 </div>
-            </div>
-            <div class="menu">
-                <a class="menu-item" href="#">
-                    <i class="fas fa-search"></i>
-                </a>
-                <a class="menu-item" href="#">
-                    <i class="fas fa-heart"></i>
-                </a>
-                <a class="menu-item" href="{% url 'profile' %}">
-                    <i class="fas fa-user"></i>
-                </a>
-                <a class="menu-item" href="#">
-                    <i class="fas fa-cog"></i>
-                </a>
-                <a class="menu-item" href="{% url 'logout' %}">
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
             </div>
         {% else %}
         {% endif %}
         <!-- Main content -->
         {% block content %}
         {% endblock %}
+    </div>
     </body>
 </html>

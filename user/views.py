@@ -4,14 +4,23 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import RegistrationForm
+from .forms import RegistrationForm, ProfileUpdateForm
+from .models import Profile
 
 # Require login to see own profile
 @login_required
 def profile(request):
-    context = {}
-    template = loader.get_template('user/profile.html')
-    return HttpResponse(template.render(context, request))
+    current_user = User.objects.get(id=request.user.id)
+    user_profile = Profile.objects.get(user=current_user)
+    if request.method == "POST":
+        return render(request, 'user/profile.html', {})
+    else:
+        form = ProfileUpdateForm(instance=user_profile)
+        return render(request, 'user/profile.html', {'form': form})
+
+    # context = {}
+    # template = loader.get_template('user/profile.html')
+    # return HttpResponse(template.render(context, request))
 
 def register(request):
     form = RegistrationForm(request.POST or None)

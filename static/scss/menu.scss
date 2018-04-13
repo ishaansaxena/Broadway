@@ -1,63 +1,98 @@
 @import "settings.scss";
 
-.masthead {
+.menu {
     display: block;
     position: sticky;
     top: 0;
     left: 0;
     width: 100%;
-    background: $wd;
+    background: $wl;
     padding: 1rem 0;
     text-align: center;
+    z-index: 99;
+    border-bottom: solid 1px $we;
+    .menu-item {
+        display: block;
+        position: relative;
+        text-decoration: none;
+        color: inherit;
+        float: right;
+        height: 5rem;
+        width: 3rem;
+        transition: all 0.25s ease;
+        &:hover {
+            color: $ac;
+        }
+        svg, i {
+            display: inline-block;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
     .logo {
-        display: inline-block;
+        display: block;
         position: relative;
         text-decoration: none;
         color: inherit;
         font-family: "Playfair Display", serif;
         font-weight: bolder;
         font-size: 2.5rem;
-        padding: 2rem 4rem;
-        background: $wl;
+        height: 2.5rem;
+        width: auto;
+        padding: 1.25rem 0;
         &::after{
             content: '';
             display: block;
             position: relative;
             background: $pm;
             width: 60%; height: 0.3rem;
-        }
-    }
-    .container {
-        background: $wl;
-    }
-}
-
-.menu {
-    display: block;
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    .menu-item {
-        display: inline-block;
-        position: relative;
-        text-decoration: none;
-        width: 2rem;
-        height: 2rem;
-        border-radius: 50%;
-        margin: 0 0.25rem;
-        color: $wl;
-        background: $pm;
-        transition: all 0.25s ease;
-        svg, i {
-            display: block;
-            position: relative;
-            margin: auto;
-            top: 50%;
             transform: translateY(-50%);
         }
         &:hover {
-            background: $ac;
+            color: $bl;
+        }
+        &.menu-item {
+            float: left;
+        }
+        .text {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
         }
     }
+    .container {
+        height: 5rem;
+    }
 }
+//
+// .menu {
+//     display: block;
+//     position: fixed;
+//     bottom: 2rem;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     z-index: 99;
+//     .menu-item {
+//         display: inline-block;
+//         position: relative;
+//         text-decoration: none;
+//         width: 2rem;
+//         height: 2rem;
+//         border-radius: 50%;
+//         margin: 0 0.25rem;
+//         color: $wl;
+//         background: $pm;
+//         transition: all 0.25s ease;
+//         svg, i {
+//             display: block;
+//             position: relative;
+//             margin: auto;
+//             top: 50%;
+//             transform: translateY(-50%);
+//         }
+//         &:hover {
+//             background: $ac;
+//         }
+//     }
+// }

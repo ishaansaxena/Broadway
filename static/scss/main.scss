@@ -31,9 +31,22 @@ body{
 .container {
     display: block;
     position: relative;
-    margin: auto;
+    margin: 0 10%;
     // padding: 1.5rem 0;
-    width: 75%;
+    width: auto;
+}
+
+.section {
+    width: auto;
+    padding: 3rem 4rem;
+    margin: 2rem 0 0 0;
+    background: $wl;
+    border: solid 1px $we;
+    &.transparent {
+        padding: 1rem 4rem;
+        background: transparent;
+        border: none;
+    }
 }
 
 .btn {

@@ -12,69 +12,73 @@
   height: 5px; }
 
 ::-webkit-scrollbar-track {
-  background: #EEEEEE; }
+  background: #F9F9F9; }
 
 ::-webkit-scrollbar-thumb {
   background: #2196F3; }
 
-.masthead {
+.menu {
   display: block;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   left: 0;
   width: 100%;
-  background: #EEEEEE;
+  background: #FFFFFF;
   padding: 1rem 0;
-  text-align: center; }
-  .masthead .logo {
-    display: inline-block;
+  text-align: center;
+  z-index: 99;
+  border-bottom: solid 1px #EEEEEE; }
+  .menu .menu-item {
+    display: block;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    float: right;
+    height: 5rem;
+    width: 3rem;
+    -webkit-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease; }
+    .menu .menu-item:hover {
+      color: #009688; }
+    .menu .menu-item svg, .menu .menu-item i {
+      display: inline-block;
+      position: relative;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%); }
+  .menu .logo {
+    display: block;
     position: relative;
     text-decoration: none;
     color: inherit;
     font-family: "Playfair Display", serif;
     font-weight: bolder;
     font-size: 2.5rem;
-    padding: 2rem 4rem;
-    background: #FFFFFF; }
-    .masthead .logo::after {
+    height: 2.5rem;
+    width: auto;
+    padding: 1.25rem 0; }
+    .menu .logo::after {
       content: '';
       display: block;
       position: relative;
       background: #2196F3;
       width: 60%;
-      height: 0.3rem; }
-  .masthead .container {
-    background: #FFFFFF; }
-
-.menu {
-  display: block;
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%); }
-  .menu .menu-item {
-    display: inline-block;
-    position: relative;
-    text-decoration: none;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    margin: 0 0.25rem;
-    color: #FFFFFF;
-    background: #2196F3;
-    -webkit-transition: all 0.25s ease;
-    -o-transition: all 0.25s ease;
-    transition: all 0.25s ease; }
-    .menu .menu-item svg, .menu .menu-item i {
-      display: block;
+      height: 0.3rem;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%); }
+    .menu .logo:hover {
+      color: #212121; }
+    .menu .logo.menu-item {
+      float: left; }
+    .menu .logo .text {
       position: relative;
-      margin: auto;
       top: 50%;
       -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
       transform: translateY(-50%); }
-    .menu .menu-item:hover {
-      background: #009688; }
+  .menu .container {
+    height: 5rem; }

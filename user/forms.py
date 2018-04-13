@@ -36,3 +36,8 @@ class RegistrationForm(UserCreationForm):
                     # widget.attrs['class'] = 'form-control'
                     pass
                 widget.attrs['placeholder'] = field.label
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ("name", "bio", "birth_date", "profile_picture")

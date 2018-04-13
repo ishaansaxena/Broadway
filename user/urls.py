@@ -27,5 +27,6 @@ urlpatterns = [
         }
     ),
     url(r'^register/$', views.register, name='register'),
+    url(r'^(?P<username>[-\w]+)/$', views.peer_profile, name='profile_view'),
     # TODO: Create path to view other profiles
 ]

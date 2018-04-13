@@ -1,6 +1,6 @@
 from django.template import loader
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -25,6 +25,18 @@ def profile(request):
     # context = {}
     # template = loader.get_template('user/profile.html')
     # return HttpResponse(template.render(context, request))
+
+def peer_profile(request, username):
+    if username == request.user.username:
+        return redirect('profile')
+    user = get_object_or_404(User, username=username)
+    user_profile = Profile.objects.get(user=user)
+    context = {
+        'profile': user_profile,
+        'user': user,
+    }
+    return render(request, 'user/peerprofile.html', context)
+
 
 def register(request):
     form = RegistrationForm(request.POST or None)

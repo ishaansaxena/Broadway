@@ -37,7 +37,8 @@
   .profile.profile-data {
     margin: 1rem;
     font-family: "Lato", sans-serif;
-    text-align: left; }
+    text-align: left;
+    width: 400px; }
     .profile.profile-data .username {
       margin: 0;
       padding: 0;

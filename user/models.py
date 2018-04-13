@@ -15,6 +15,12 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     # Profile has a name
     name = models.TextField(max_length=32, blank=True)
+    # Profile has a image
+    profile_picture = models.ImageField(
+        upload_to='static/assets/user_images/',
+        default='static/assets/user_images/default.png',
+        blank=True
+    )
     # TODO: Add fields to Profile based on requirements
 
     # Return username as object descriptor

@@ -6,7 +6,7 @@
 
 <!-- Create title -->
 {% block title %}
-    Broadway - Login
+    Broadway - Register
 {% endblock %}
 
 <!-- Load assets -->
@@ -29,7 +29,7 @@
         </div>
     {% else %}
         <div class="login">
-            <form action="{% url 'login' %}" method="post">
+            <form action="{% url 'register' %}" method="post">
                 <div class="logo">Broadway</div>
                 <div class="form-container">
                     <form method="post" action="{% url 'login' %}">
@@ -38,14 +38,22 @@
                             {{ form.username.errors }}
                         {% endif %}
                         {{ form.username }}
-                        {% if form.password.errors %}
-                            {{ form.password.errors }}
+                        {% if form.email.errors %}
+                            {{ form.email.errors }}
                         {% endif %}
-                        {{ form.password }}
+                        {{ form.email }}
+                        {% if form.password1.errors %}
+                            {{ form.password1.errors }}
+                        {% endif %}
+                        {{ form.password1 }}
+                        {% if form.password2.errors %}
+                            {{ form.password2.errors }}
+                        {% endif %}
+                        {{ form.password2 }}
                         <div class="btn-container button-group">
-                            <input class="btn" type="submit" value="Login"/>
+                            <input class="btn" type="submit" value="Register"/>
                             <input type="hidden" name="next" value="/"/>
-                            <a href="{% url 'register' %}" class="btn accent">Register</a>
+                            <a href="{% url 'login' %}" class="btn accent">Login</a>
                         </div>
                     </form>
                 </div>

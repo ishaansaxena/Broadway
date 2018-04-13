@@ -20,4 +20,19 @@ class LoginForm(AuthenticationForm):
                     pass
                 widget.attrs['placeholder'] = field.label
 
-# TODO: Create User Creation Form similar to User Auth Form
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True, label='Email')
+
+    def __init__(self, *args, **kwargs):
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        for field_name in self.fields:
+            field = self.fields.get(field_name)
+            if field:
+                widget = field.widget
+                if type(widget) is forms.TextInput:
+                    # something
+                    pass
+                elif type(widget) is forms.Textarea:
+                    # widget.attrs['class'] = 'form-control'
+                    pass
+                widget.attrs['placeholder'] = field.label

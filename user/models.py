@@ -23,9 +23,7 @@ class Profile(models.Model):
 # On save, a profile will be created
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        profile, created = Profile.objects.get_or_create(
-            user=instance, birth_date=timezone.now
-        )
+        profile, created = Profile.objects.get_or_create(user=instance)
 
 # Make the create_profile method a reciever for User saves
 post_save.connect(create_profile, User)

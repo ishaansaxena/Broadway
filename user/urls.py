@@ -26,5 +26,6 @@ urlpatterns = [
             'next_page': '/'
         }
     ),
+    url(r'^register/$', views.register, name='register'),
     # TODO: Create path to view other profiles
 ]

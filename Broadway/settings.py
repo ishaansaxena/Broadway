@@ -25,7 +25,7 @@ SECRET_KEY = 'x5hx(8s3^(pdl(&vvzbvn04q4s_^tfk*v0vd#c8fr610nxnx_)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0"]
 
 #TMDB API Keys
 API_KEY = "9f330f7fda1e5169e70f092cbdfb589e"

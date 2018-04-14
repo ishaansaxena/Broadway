@@ -1,12 +1,12 @@
 from django.db import models
 
 import Broadway.settings as settings
-import tmdb3
+# import tmdb3
 # Create your models here.
 
 class Movie(models.Model):
     #movie has id in database
-    id = models.IntegerField()
+    id = models.IntegerField(primary_key=True)
     #title of movie
     title = models.CharField(max_length=100)
     #overview of movie
@@ -23,9 +23,3 @@ class Movie(models.Model):
     #return movie title as object descriptor
     def __str__(self):
         return self.title
-
-
-
-
-
-

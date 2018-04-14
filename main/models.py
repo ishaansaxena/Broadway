@@ -1,12 +1,20 @@
 from django.db import models
 
 import Broadway.settings as settings
-# import tmdb3
+
+import tmdb3
+import user.models
+# Create your models here.
+
+class Movie(models.Model):
+
+ import tmdb3
 # Create your models here.
 
 class Movie(models.Model):
     #movie has id in database
     id = models.IntegerField(primary_key=True)
+
     #title of movie
     title = models.CharField(max_length=100)
     #overview of movie
@@ -23,3 +31,19 @@ class Movie(models.Model):
     #return movie title as object descriptor
     def __str__(self):
         return self.title
+
+
+
+class AbstractActivity(models.Model):
+    activityType = models.CharField(max_length=50)
+
+    class Meta:
+        abstract = True
+
+class AddMovieActivity(AbstractActivity):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+class AddUserActivity(AbstractActivity):
+    user = user.models.Profile
+
+

@@ -4,7 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-from main.models import Movie
+import main.models
 
 # User profile model
 class Profile(models.Model):
@@ -23,7 +23,7 @@ class Profile(models.Model):
         blank=True
     )
     # TODO: Add fields to Profile based on requirements
-    
+
 
     # Return username as object descriptor
     def __str__(self):

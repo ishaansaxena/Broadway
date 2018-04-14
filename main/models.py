@@ -2,7 +2,7 @@ from django.db import models
 
 import Broadway.settings as settings
 
-import tmdb3
+# import tmdb3
 import user.models
 # Create your models here.
 

@@ -7,11 +7,6 @@ import user.models
 # Create your models here.
 
 class Movie(models.Model):
-
- import tmdb3
-# Create your models here.
-
-class Movie(models.Model):
     #movie has id in database
     id = models.IntegerField(primary_key=True)
 
@@ -45,5 +40,3 @@ class AddMovieActivity(AbstractActivity):
 
 class AddUserActivity(AbstractActivity):
     user = user.models.Profile
-
-

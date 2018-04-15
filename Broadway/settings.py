@@ -25,6 +25,8 @@ SECRET_KEY = 'x5hx(8s3^(pdl(&vvzbvn04q4s_^tfk*v0vd#c8fr610nxnx_)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ALLOWED_HOSTS = []
+
 #TMDB API Keys
 API_KEY = "9f330f7fda1e5169e70f092cbdfb589e"
 API_READ_ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZjMzMGY3ZmRhMWU1MTY5ZTcwZjA5MmNiZGZiNTg5ZSIsInN1YiI6IjVhZDE1ZjVhMGUwYTI2NmMyMjAwNGYyNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8jUYHf8UFtamnvLatZF3mO_yaAbWiKV_KC9IOwxTdfg"
@@ -120,9 +122,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join('static'),)
-
+STATICFILES_DIRS = {
+    os.path.join(PROJECT_ROOT, 'static')
+}
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # Authentication settings
 LOGIN_URL = '/u/login'

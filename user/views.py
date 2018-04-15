@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm, ProfileUpdateForm
 from .models import Profile
+from .models import AddUserActivity
 # import pyrebase
 
 # config = {
@@ -69,6 +70,8 @@ def follow(request, username):
         user_profile_to_follow.followers.add(user_profile_follower)
 
         #add request user
+        add_user_activity = AddUserActivity("Added User", user_profile_follower, user_profile_to_follow)
+        add_user_activity.save()
 
         return HttpResponse("OK")
 

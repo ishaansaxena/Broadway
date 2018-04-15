@@ -75,3 +75,4 @@ class AddUserActivity(AbstractActivity):
         on_delete=models.CASCADE,
         related_name="related_user"
     )
+

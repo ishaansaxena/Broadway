@@ -6,6 +6,14 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 import main.models
 
+# Activity model
+class AbstractActivity(models.Model):
+    activityType = models.CharField(max_length=50)
+
+    # class Meta:
+    #     abstract = True
+
+
 # User profile model
 class Profile(models.Model):
     # Profile has a user
@@ -22,9 +30,11 @@ class Profile(models.Model):
         default='static/assets/user_images/default.png',
         blank=True
     )
-    # TODO: Add fields to Profile based on requirements
-    activities = models.ForeignKey(main.models.AbstractActivity, on_delete=models.CASCADE)
-
+    # User can follow or be followed by other users
+    followers = models.ManyToManyField('self', symmetrical=False, related_name="followed_by")
+    following = models.ManyToManyField('self', symmetrical=False, related_name="follows")
+    # User has some activities
+    activities = models.ManyToManyField(AbstractActivity, related_name="activities")
 
     # Return username as object descriptor
     def __str__(self):
@@ -38,3 +48,11 @@ def create_profile(sender, instance, created, **kwargs):
 
 # Make the create_profile method a reciever for User saves
 post_save.connect(create_profile, User)
+
+
+
+class AddMovieActivity(AbstractActivity):
+    movie = models.ForeignKey(main.models.Movie, on_delete=models.CASCADE)
+
+class AddUserActivity(AbstractActivity):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)

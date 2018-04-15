@@ -23,6 +23,7 @@ class Profile(models.Model):
         blank=True
     )
     # TODO: Add fields to Profile based on requirements
+    activities = models.ForeignKey(main.models.AbstractActivity, on_delete=models.CASCADE)
 
 
     # Return username as object descriptor

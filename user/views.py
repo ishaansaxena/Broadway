@@ -55,7 +55,20 @@ def follow(request, username):
         return redirect('profile')
     if request.method == "POST":
         print(request.user.username)
-        print(user.username)
+        print(username)
+
+        ##get user profiles of followers and followees
+        user_follower = get_object_or_404(User, username=request.user.username)
+        user_to_follow = get_object_or_404(User, username=username)
+
+        user_profile_follower = Profile.objects.get(user=user_follower)
+        user_profile_to_follow = Profile.objects.get(user=user_to_follow)
+
+        user_profile_follower.following.add(user_profile_to_follow)
+        user_profile_to_follow.followers.add(user_profile_follower)
+
+        #add request user
+
         return HttpResponse("OK")
 
 def register(request):

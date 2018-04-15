@@ -37,8 +37,7 @@
   .profile.profile-data {
     margin: 1rem;
     font-family: "Lato", sans-serif;
-    text-align: left;
-    width: 400px; }
+    text-align: left; }
     .profile.profile-data .username {
       margin: 0;
       padding: 0;
@@ -54,3 +53,9 @@
       font-size: 1rem; }
       .profile.profile-data .data .interactions {
         font-weight: bolder; }
+
+.btn-container {
+  width: 100%;
+  text-align: center; }
+  .btn-container .btn {
+    display: inline-block; }

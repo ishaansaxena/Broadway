@@ -24,7 +24,6 @@
         margin: 1rem;
         font-family: "Lato", sans-serif;
         text-align: left;
-        width: 400px;
         .username {
             margin: 0;
             padding: 0;
@@ -44,5 +43,13 @@
                 font-weight: bolder;
             }
         }
+    }
+}
+
+.btn-container {
+    width: 100%;
+    text-align: center;
+    .btn {
+        display: inline-block;
     }
 }

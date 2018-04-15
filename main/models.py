@@ -7,7 +7,7 @@ import user.models
 # Create your models here.
 
 class Movie(models.Model):
-    
+
  import tmdb3
 # Create your models here.
 

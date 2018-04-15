@@ -1,1 +1,1 @@
-web: gunicorn Broadway.wsgi --log-file--
+web: gunicorn Broadway.wsgi:application --log-file -

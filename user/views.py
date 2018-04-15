@@ -61,6 +61,7 @@ def follow(request, username):
         user_follower = get_object_or_404(User, username=request.user.username)
         user_to_follow = get_object_or_404(User, username=username)
 
+        ##update follwers and following lists of users profiles
         user_profile_follower = Profile.objects.get(user=user_follower)
         user_profile_to_follow = Profile.objects.get(user=user_to_follow)
 

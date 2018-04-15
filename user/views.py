@@ -6,20 +6,20 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm, ProfileUpdateForm
 from .models import Profile
-import pyrebase
+# import pyrebase
 
-config = {
-    'apiKey': "AIzaSyACq-nKe1xQcY4MhhPdmRfAbiyO7-qAoP4",
-    'authDomain': "broadway-8c7ee.firebaseapp.com",
-    'databaseURL': "https://broadway-8c7ee.firebaseio.com",
-    'projectId': "broadway-8c7ee",
-    'storageBucket': "broadway-8c7ee.appspot.com",
-    'messagingSenderId': "530646122241"
-}
+# config = {
+#     'apiKey': "AIzaSyACq-nKe1xQcY4MhhPdmRfAbiyO7-qAoP4",
+#     'authDomain': "broadway-8c7ee.firebaseapp.com",
+#     'databaseURL': "https://broadway-8c7ee.firebaseio.com",
+#     'projectId': "broadway-8c7ee",
+#     'storageBucket': "broadway-8c7ee.appspot.com",
+#     'messagingSenderId': "530646122241"
+# }
 #Intialize Firebase
-firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
-ref = firebase.database()
+# firebase = pyrebase.initialize_app(config)
+# auth = firebase.auth()
+# ref = firebase.database()
 # Require login to see own profile
 @login_required
 def profile(request):
@@ -64,8 +64,7 @@ def register(request):
                 username = form.cleaned_data['username'],
                 password = form.cleaned_data['password1'],
             )
-            ref.child("Users").child(new_user.username).child("Name").set("Blah")
+            # ref.child("Users").child(new_user.username).child("Name").set("Blah")
             login(request, new_user)
-
             return redirect('index')
     return render(request, 'user/register.html', {'form': form})

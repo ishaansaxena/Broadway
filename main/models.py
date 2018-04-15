@@ -3,7 +3,6 @@ from django.db import models
 import Broadway.settings as settings
 
 # import tmdb3
-import user.models
 # Create your models here.
 
 class Movie(models.Model):
@@ -26,17 +25,3 @@ class Movie(models.Model):
     #return movie title as object descriptor
     def __str__(self):
         return self.title
-
-
-
-class AbstractActivity(models.Model):
-    activityType = models.CharField(max_length=50)
-
-    class Meta:
-        abstract = True
-
-class AddMovieActivity(AbstractActivity):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-
-class AddUserActivity(AbstractActivity):
-    user = user.models.Profile

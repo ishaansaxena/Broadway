@@ -11,6 +11,18 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import pyrebase
+
+config = {
+    'apiKey': "AIzaSyACq-nKe1xQcY4MhhPdmRfAbiyO7-qAoP4",
+    'authDomain': "broadway-8c7ee.firebaseapp.com",
+    'databaseURL': "https://broadway-8c7ee.firebaseio.com",
+    'projectId': "broadway-8c7ee",
+    'storageBucket': "broadway-8c7ee.appspot.com",
+    'messagingSenderId': "530646122241"
+}
+#Intialize Firebase
+firebase = pyrebase.initialize_app(config)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -122,11 +134,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT = ''
 STATIC_URL = '/static/'
-STATICFILES_DIRS = {
-    os.path.join(PROJECT_ROOT, 'static')
-}
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_DIRS = (os.path.join('static'),)
+
 # Authentication settings
 LOGIN_URL = '/u/login'

@@ -39,4 +39,4 @@ class AddMovieActivity(AbstractActivity):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
 class AddUserActivity(AbstractActivity):
-    user = user.models.Profile
+    user = models.ForeignKey(user.models.Profile, on_delete=models.CASCADE)

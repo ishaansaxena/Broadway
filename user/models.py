@@ -6,14 +6,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 import main.models
 
-# Activity model
-class AbstractActivity(models.Model):
-    activityType = models.CharField(max_length=50)
-
-    # class Meta:
-    #     abstract = True
-
-
 # User profile model
 class Profile(models.Model):
     # Profile has a user
@@ -31,10 +23,19 @@ class Profile(models.Model):
         blank=True
     )
     # User can follow or be followed by other users
-    followers = models.ManyToManyField('self', symmetrical=False, related_name="followed_by")
-    following = models.ManyToManyField('self', symmetrical=False, related_name="follows")
-    # User has some activities
-    activities = models.ManyToManyField(AbstractActivity, related_name="activities")
+    followers = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        related_name="followed_by"
+    )
+    following = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        related_name="follows"
+    )
+
+    # author = Author.objects.get(id=1)
+    # books = author.book_set.all()
 
     # Return username as object descriptor
     def __str__(self):
@@ -49,10 +50,28 @@ def create_profile(sender, instance, created, **kwargs):
 # Make the create_profile method a reciever for User saves
 post_save.connect(create_profile, User)
 
-
+# Activity model
+class AbstractActivity(models.Model):
+    activityType = models.CharField(max_length=50)
+    activity_user = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name="activity_user",
+        null=True
+    )
+    # class Meta:
+    #     abstract = True
 
 class AddMovieActivity(AbstractActivity):
-    movie = models.ForeignKey(main.models.Movie, on_delete=models.CASCADE)
+    movie = models.OneToOneField(
+        main.models.Movie,
+        on_delete=models.CASCADE,
+        related_name="movie"
+    )
 
 class AddUserActivity(AbstractActivity):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name="related_user"
+    )

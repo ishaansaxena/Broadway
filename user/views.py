@@ -50,6 +50,14 @@ def peer_profile(request, username):
     }
     return render(request, 'user/peerprofile.html', context)
 
+def follow(request, username):
+    if username == request.user.username:
+        return redirect('profile')
+    if request.method == "POST":
+        print(request.user.username)
+        print(user.username)
+        return HttpResponse("OK")
+
 def register(request):
     form = RegistrationForm(request.POST or None)
     if request.method == 'POST':

@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from .forms import RegistrationForm, ProfileUpdateForm
 from .models import Profile
+from .models import AddUserActivity
 # import pyrebase
 
 # config = {
@@ -59,7 +60,7 @@ def follow(request, username):
         print(request.user.username)
         print(username)
 
-        # ##get user profiles of followers and followees
+        ##get user profiles of followers and followees
         # user_follower = get_object_or_404(User, username=request.user.username)
         # user_to_follow = get_object_or_404(User, username=username)
         #
@@ -69,6 +70,10 @@ def follow(request, username):
         #
         # user_profile_follower.following.add(user_profile_to_follow)
         # user_profile_to_follow.followers.add(user_profile_follower)
+        #
+        # #add request user
+        # add_user_activity = AddUserActivity("Added User", user_profile_follower, user_profile_to_follow)
+        # add_user_activity.save()
 
         return HttpResponse("OK")
 

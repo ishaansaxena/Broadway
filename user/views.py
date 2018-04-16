@@ -6,8 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from .forms import RegistrationForm, ProfileUpdateForm
-from .models import Profile
-from .models import AddUserActivity
+from .models import *
 # import pyrebase
 
 # config = {
@@ -44,11 +43,20 @@ def profile(request):
 def peer_profile(request, username):
     if username == request.user.username:
         return redirect('profile')
+    # Get visited user
     user = get_object_or_404(User, username=username)
     user_profile = Profile.objects.get(user=user)
+    # Get request user
+    current_user = Profile.objects.get(user=request.user)
+    # Check if request u follows visited u
+    is_followed = False
+    for follower in current_user.follow_set.all():
+        if follower.followed_user == user_profile:
+            is_followed = True
     context = {
         'profile': user_profile,
         'user': user,
+        'is_followed': is_followed,
     }
     return render(request, 'user/peerprofile.html', context)
 
@@ -57,25 +65,49 @@ def follow(request, username):
     if username == request.user.username:
         return redirect('profile')
     if request.method == "POST":
-        print(request.user.username)
-        print(username)
-
-        ##get user profiles of followers and followees
-        # user_follower = get_object_or_404(User, username=request.user.username)
-        # user_to_follow = get_object_or_404(User, username=username)
-        #
-        # ##update follwers and following lists of users profiles
-        # user_profile_follower = Profile.objects.get(user=user_follower)
-        # user_profile_to_follow = Profile.objects.get(user=user_to_follow)
-        #
-        # user_profile_follower.following.add(user_profile_to_follow)
-        # user_profile_to_follow.followers.add(user_profile_follower)
-        #
-        # #add request user
-        # add_user_activity = AddUserActivity("Added User", user_profile_follower, user_profile_to_follow)
+        # Get user profiles of followers and followees
+        user_follower = get_object_or_404(User, username=request.user.username)
+        user_to_follow = get_object_or_404(User, username=username)
+        # Update follwers and following lists of users profiles
+        user_profile_follower = Profile.objects.get(user=user_follower)
+        user_profile_to_follow = Profile.objects.get(user=user_to_follow)
+        # Check if request u follows visited u
+        is_followed = False
+        for follower in user_profile_follower.follow_set.all():
+            if follower.followed_user == user_profile_to_follow:
+                is_followed = True
+        if is_followed:
+            return HttpResponse("OK")
+        # Increase following count
+        user_profile_follower.following += 1
+        user_profile_follower.save()
+        # Increase follower count
+        user_profile_to_follow.followers += 1
+        user_profile_to_follow.save()
+        # Create new follow relation
+        follow_relation = Follow(
+            main_user=user_profile_follower,
+            followed_user=user_profile_to_follow
+        )
+        follow_relation.save()
+        # Add user activity
+        # add_user_activity = AddUserActivity(
+        #     activityType="Added User",
+        #     activity_user=user_profile_follower,
+        #     related_user=user_profile_to_follow
+        # )
         # add_user_activity.save()
 
         return HttpResponse("OK")
+
+@csrf_exempt
+def unfollow(request, username):
+    if username == request.user.username:
+        return redirect('profile')
+    if request.method == "POST":
+        print(request.user.username)
+        print(username)
+    return HttpResponse("OK")
 
 def register(request):
     form = RegistrationForm(request.POST or None)

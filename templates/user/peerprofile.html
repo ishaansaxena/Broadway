@@ -27,8 +27,8 @@
                 {{ profile.bio }}
             </p>
             <p class="data-outer">
-                <span class="data"><span class="interactions">0</span> followers</span>
-                <span class="data"><span class="interactions">0</span> following</span>
+                <span class="data"><span class="interactions">{{ profile.followers }}</span> followers</span>
+                <span class="data"><span class="interactions">{{ profile.following }}</span> following</span>
                 <span class="data"><span class="interactions">0</span> posts</span>
             </p>
         </div>
@@ -36,14 +36,14 @@
     <div class="btn-container">
         <!-- <div class="btn btn-follow">Follow</div> -->
         {% csrf_token %}
-        {% if profile in req_profile.following %}
+        {% if is_followed %}
             <div class="btn btn-unfollow">Unfollow</div>
         {% else %}
             <div class="btn btn-follow">Follow</div>
         {% endif %}
     </div>
     <div class="section">
-        {{ req_profile.followed_by}}
+
     </div>
     <!-- <form action="{% url 'profile' %}" method="post">
         {{ user.username }}

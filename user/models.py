@@ -22,6 +22,9 @@ class Profile(models.Model):
         default='static/assets/user_images/default.png',
         blank=True
     )
+    # User has followers and following
+    followers = models.IntegerField(default=0)
+    following = models.IntegerField(default=0)
     # Activities for all users can be gotten by a similar relation
     # author = Author.objects.get(id=1)
     # books = author.book_set.all()
@@ -39,13 +42,10 @@ def create_profile(sender, instance, created, **kwargs):
 # Make the create_profile method a reciever for User saves
 post_save.connect(create_profile, User)
 
-
-
-class FollowRelation(models.Model):
+class Follow(models.Model):
     main_user = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
-        related_name="main_user",
         null=True
     )
     followed_user = models.OneToOneField(
@@ -57,7 +57,6 @@ class FollowRelation(models.Model):
     # Return username as object descriptor
     def __str__(self):
         return str(self.main_user) + " " + str(self.followed_user)
-
 
 # Activity model
 class AbstractActivity(models.Model):
@@ -84,4 +83,3 @@ class AddUserActivity(AbstractActivity):
         on_delete=models.CASCADE,
         related_name="related_user"
     )
-

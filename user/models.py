@@ -22,18 +22,7 @@ class Profile(models.Model):
         default='static/assets/user_images/default.png',
         blank=True
     )
-    # User can follow or be followed by other users
-    followers = models.ManyToManyField(
-        'self',
-        symmetrical=False,
-        related_name="followed_by"
-    )
-    following = models.ManyToManyField(
-        'self',
-        symmetrical=False,
-        related_name="follows"
-    )
-
+    # Activities for all users can be gotten by a similar relation
     # author = Author.objects.get(id=1)
     # books = author.book_set.all()
 
@@ -49,6 +38,26 @@ def create_profile(sender, instance, created, **kwargs):
 
 # Make the create_profile method a reciever for User saves
 post_save.connect(create_profile, User)
+
+
+
+class FollowRelation(models.Model):
+    main_user = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name="main_user",
+        null=True
+    )
+    followed_user = models.OneToOneField(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name="followed_user"
+    )
+
+    # Return username as object descriptor
+    def __str__(self):
+        return str(self.main_user) + " " + str(self.followed_user)
+
 
 # Activity model
 class AbstractActivity(models.Model):

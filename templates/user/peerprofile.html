@@ -34,11 +34,17 @@
         </div>
     </div>
     <div class="btn-container">
-        <div class="btn follow-button">Follow</div>
+        <!-- <div class="btn btn-follow">Follow</div> -->
+        {% csrf_token %}
+        {% if profile in req_profile.following %}
+            <div class="btn btn-unfollow">Unfollow</div>
+        {% else %}
+            <div class="btn btn-follow">Follow</div>
+        {% endif %}
     </div>
-    <!-- <div class="section">
-
-    </div> -->
+    <div class="section">
+        {{ req_profile.followed_by}}
+    </div>
     <!-- <form action="{% url 'profile' %}" method="post">
         {{ user.username }}
         {{ user.email }}

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from .forms import RegistrationForm, ProfileUpdateForm
 from .models import Profile
 # import pyrebase
@@ -50,6 +51,7 @@ def peer_profile(request, username):
     }
     return render(request, 'user/peerprofile.html', context)
 
+@csrf_exempt
 def follow(request, username):
     if username == request.user.username:
         return redirect('profile')
@@ -57,18 +59,16 @@ def follow(request, username):
         print(request.user.username)
         print(username)
 
-        ##get user profiles of followers and followees
-        user_follower = get_object_or_404(User, username=request.user.username)
-        user_to_follow = get_object_or_404(User, username=username)
-
-        ##update follwers and following lists of users profiles
-        user_profile_follower = Profile.objects.get(user=user_follower)
-        user_profile_to_follow = Profile.objects.get(user=user_to_follow)
-
-        user_profile_follower.following.add(user_profile_to_follow)
-        user_profile_to_follow.followers.add(user_profile_follower)
-
-        #add request user
+        # ##get user profiles of followers and followees
+        # user_follower = get_object_or_404(User, username=request.user.username)
+        # user_to_follow = get_object_or_404(User, username=username)
+        #
+        # ##update follwers and following lists of users profiles
+        # user_profile_follower = Profile.objects.get(user=user_follower)
+        # user_profile_to_follow = Profile.objects.get(user=user_to_follow)
+        #
+        # user_profile_follower.following.add(user_profile_to_follow)
+        # user_profile_to_follow.followers.add(user_profile_follower)
 
         return HttpResponse("OK")
 

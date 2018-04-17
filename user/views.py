@@ -102,7 +102,7 @@ def unfollow(request, username):
             if follower.followed_user == user_profile_to_unfollow:
                 is_following = True
         # If followed, do nothing
-        if is_following:        
+        if is_following:
         # Delete follow relation i.e. unfollow
             follow_relation = Follow.objects.get(main_user=user_profile_follower,followed_user=user_profile_to_unfollow)
             follow_relation.delete()

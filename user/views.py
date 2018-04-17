@@ -92,9 +92,25 @@ def unfollow(request, username):
     if username == request.user.username:
         return redirect('profile')
     if request.method == "POST":
-        print(request.user.username)
-        print(username)
-    return HttpResponse("OK")
+        user_follower = get_object_or_404(User, username=request.user.username)
+        user_to_unfollow = get_object_or_404(User, username=username)
+
+        user_profile_follower = Profile.objects.get(user=user_follower)
+        user_profile_to_unfollow = Profile.objects.get(user=user_to_unfollow)
+        is_following = False
+        for follower in user_profile_follower.follow_set.all():
+            if follower.followed_user == user_profile_to_unfollow:
+                is_following = True
+        # If followed, do nothing
+        if is_following:        
+        # Delete follow relation i.e. unfollow
+            follow_relation = Follow.objects.get(main_user=user_profile_follower,followed_user=user_profile_to_unfollow)
+            follow_relation.delete()
+            return HttpResponse("OK")
+        else:
+            #If not following do nothing
+            return HttpResponse("OK")
+
 
 def register(request):
     form = RegistrationForm(request.POST or None)

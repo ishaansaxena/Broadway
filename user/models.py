@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 import main.models
 
 # User profile model
@@ -57,6 +57,22 @@ class Follow(models.Model):
     # Return username as object descriptor
     def __str__(self):
         return str(self.main_user) + " " + str(self.followed_user)
+
+def follow_post_save(sender, instance, created, **kwargs):
+    if created:
+        instance.main_user.following += 1
+        instance.followed_user.followers += 1
+        instance.main_user.save()
+        instance.followed_user.save()
+
+def follow_pre_delete(sender, instance, **kwargs):
+    instance.main_user.following -= 1
+    instance.followed_user.followers -= 1
+    instance.main_user.save()
+    instance.followed_user.save()
+
+post_save.connect(follow_post_save, Follow)
+pre_delete.connect(follow_pre_delete, Follow)
 
 # Activity model
 class AbstractActivity(models.Model):

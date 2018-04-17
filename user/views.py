@@ -76,28 +76,15 @@ def follow(request, username):
         for follower in user_profile_follower.follow_set.all():
             if follower.followed_user == user_profile_to_follow:
                 is_followed = True
+        # If already followed, do nothing
         if is_followed:
             return HttpResponse("OK")
-        # Increase following count
-        user_profile_follower.following += 1
-        user_profile_follower.save()
-        # Increase follower count
-        user_profile_to_follow.followers += 1
-        user_profile_to_follow.save()
         # Create new follow relation
         follow_relation = Follow(
             main_user=user_profile_follower,
             followed_user=user_profile_to_follow
         )
         follow_relation.save()
-        # Add user activity
-        # add_user_activity = AddUserActivity(
-        #     activityType="Added User",
-        #     activity_user=user_profile_follower,
-        #     related_user=user_profile_to_follow
-        # )
-        # add_user_activity.save()
-
         return HttpResponse("OK")
 
 @csrf_exempt

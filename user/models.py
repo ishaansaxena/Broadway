@@ -42,6 +42,39 @@ def create_profile(sender, instance, created, **kwargs):
 # Make the create_profile method a reciever for User saves
 post_save.connect(create_profile, User)
 
+# Activity model
+class AbstractActivity(models.Model):
+    activity_type = models.CharField(max_length=50)
+    main_user = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name="main_user",
+        null=True
+    )
+    # class Meta:
+    #     abstract = True
+
+class AddMovieActivity(AbstractActivity):
+    movie = models.OneToOneField(
+        main.models.Movie,
+        on_delete=models.CASCADE,
+        related_name="movie",
+        null=True
+    )
+
+class AddUserActivity(AbstractActivity):
+    activity_user = models.OneToOneField(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name="activity_user",
+        null=True
+    )
+
+    # return string
+    def __str__(self):
+        return str(self.main_user) + " " + self.activity_type + " " +str(self.activity_user)
+
+# Follow model
 class Follow(models.Model):
     main_user = models.ForeignKey(
         Profile,
@@ -64,38 +97,26 @@ def follow_post_save(sender, instance, created, **kwargs):
         instance.followed_user.followers += 1
         instance.main_user.save()
         instance.followed_user.save()
+        # Create an activity
+        activity = AddUserActivity(
+            activity_type="followed",
+            main_user=instance.main_user,
+            activity_user=instance.followed_user
+        )
+        activity.save()
 
 def follow_pre_delete(sender, instance, **kwargs):
     instance.main_user.following -= 1
     instance.followed_user.followers -= 1
     instance.main_user.save()
     instance.followed_user.save()
+    # Delete follow activity
+    activity = AddUserActivity.objects.get(
+        activity_type="followed",
+        main_user=instance.main_user,
+        activity_user=instance.followed_user
+    )
+    activity.delete()
 
 post_save.connect(follow_post_save, Follow)
 pre_delete.connect(follow_pre_delete, Follow)
-
-# Activity model
-class AbstractActivity(models.Model):
-    activityType = models.CharField(max_length=50)
-    activity_user = models.ForeignKey(
-        Profile,
-        on_delete=models.CASCADE,
-        related_name="activity_user",
-        null=True
-    )
-    # class Meta:
-    #     abstract = True
-
-class AddMovieActivity(AbstractActivity):
-    movie = models.OneToOneField(
-        main.models.Movie,
-        on_delete=models.CASCADE,
-        related_name="movie"
-    )
-
-class AddUserActivity(AbstractActivity):
-    user = models.OneToOneField(
-        Profile,
-        on_delete=models.CASCADE,
-        related_name="related_user"
-    )

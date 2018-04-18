@@ -1,5 +1,6 @@
 from django.template import loader
 from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -7,6 +8,11 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from .forms import RegistrationForm, ProfileUpdateForm
 from .models import *
+from Broadway import settings
+from main.models import Movie
+import tmdb3
+
+
 # import pyrebase
 
 # config = {
@@ -22,6 +28,8 @@ from .models import *
 # auth = firebase.auth()
 # ref = firebase.database()
 # Require login to see own profile
+tmdb3.set_key(settings.API_KEY)
+
 @login_required
 def profile(request):
     user_profile = Profile.objects.get(user=request.user)
@@ -131,3 +139,15 @@ def register(request):
             login(request, new_user)
             return redirect('index')
     return render(request, 'user/register.html', {'form': form})
+
+def searchMovie(request, movieId):
+    try:
+        movie = Movie.objects.get(movie_id=movieId)
+    except ObjectDoesNotExist:
+        res = tmdb3.Movie(movieId)
+        movie = Movie(movie_id=movieId, title=res.title, overview=res.overview, release_date=res.releasedate,
+                      rating=res.userrating, poster=res.poster, genre=res.genres)
+        movie.save()
+
+    context = {'movie' : movie}
+    return render(request, "main/movie.html", context)

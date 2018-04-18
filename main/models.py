@@ -7,7 +7,7 @@ import Broadway.settings as settings
 
 class Movie(models.Model):
     #movie has id in database
-    id = models.IntegerField(primary_key=True)
+    movie_id = models.IntegerField(primary_key=True)
 
     #title of movie
     title = models.CharField(max_length=100)

@@ -124,17 +124,16 @@ def follow_pre_delete(sender, instance, **kwargs):
 post_save.connect(follow_post_save, Follow)
 pre_delete.connect(follow_pre_delete, Follow)
 
-#module for user's
-class Watchlist(models.Model):
-    main_user = models.ForeignKey(
-        Profile,
-        on_delete=models.CASCADE,
-        null=True
-    )
-
-    movie_watchlist_element = models.ForeignKey(
-        Movie,
-        on_delete=models.CASCADE,
-        related_name="movie"
-    )
-
+# #module for user's
+# class Watchlist(models.Model):
+#     main_user = models.ForeignKey(
+#         Profile,
+#         on_delete=models.CASCADE,
+#         null=True
+#     )
+#
+#     movie_watchlist_element = models.ForeignKey(
+#         Movie,
+#         on_delete=models.CASCADE,
+#         related_name="movie"
+#     )

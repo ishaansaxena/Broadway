@@ -43,7 +43,7 @@ def create_profile(sender, instance, created, **kwargs):
 post_save.connect(create_profile, User)
 
 # Activity model
-class AbstractActivity(models.Model):
+class Activity(models.Model):
     activity_type = models.CharField(max_length=50)
     main_user = models.ForeignKey(
         Profile,
@@ -51,28 +51,22 @@ class AbstractActivity(models.Model):
         related_name="main_user",
         null=True
     )
-    # class Meta:
-    #     abstract = True
-
-class AddMovieActivity(AbstractActivity):
-    movie = models.OneToOneField(
+    movie = models.ForeignKey(
         main.models.Movie,
         on_delete=models.CASCADE,
         related_name="movie",
-        null=True
+        null=True,
+        blank=True
     )
-
-class AddUserActivity(AbstractActivity):
-    activity_user = models.OneToOneField(
+    activity_user = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
         related_name="activity_user",
-        null=True
+        null=True,
+        blank=True
     )
-
-    # return string
     def __str__(self):
-        return str(self.main_user) + " " + self.activity_type + " " +str(self.activity_user)
+        return str(self.main_user) + " >> " + self.activity_type
 
 # Follow model
 class Follow(models.Model):
@@ -81,7 +75,7 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    followed_user = models.OneToOneField(
+    followed_user = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
         related_name="followed_user"
@@ -98,7 +92,7 @@ def follow_post_save(sender, instance, created, **kwargs):
         instance.main_user.save()
         instance.followed_user.save()
         # Create an activity
-        activity = AddUserActivity(
+        activity = Activity(
             activity_type="followed",
             main_user=instance.main_user,
             activity_user=instance.followed_user
@@ -111,7 +105,7 @@ def follow_pre_delete(sender, instance, **kwargs):
     instance.main_user.save()
     instance.followed_user.save()
     # Delete follow activity
-    activity = AddUserActivity.objects.get(
+    activity = Activity.objects.get(
         activity_type="followed",
         main_user=instance.main_user,
         activity_user=instance.followed_user

@@ -10,8 +10,6 @@ from .forms import RegistrationForm, ProfileUpdateForm
 from .models import *
 from Broadway import settings
 from main.models import Movie
-# import tmdb3
-
 
 # import pyrebase
 
@@ -139,15 +137,3 @@ def register(request):
             login(request, new_user)
             return redirect('index')
     return render(request, 'user/register.html', {'form': form})
-
-def searchMovie(request, movieId):
-    try:
-        movie = Movie.objects.get(movie_id=movieId)
-    except ObjectDoesNotExist:
-        res = tmdb3.Movie(movieId)
-        movie = Movie(movie_id=movieId, title=res.title, overview=res.overview, release_date=res.releasedate,
-                      rating=res.userrating, poster=res.poster, genre=res.genres)
-        movie.save()
-
-    context = {'movie' : movie}
-    return render(request, "main/movie.html", context)

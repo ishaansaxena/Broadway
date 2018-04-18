@@ -10,7 +10,7 @@ from .forms import RegistrationForm, ProfileUpdateForm
 from .models import *
 from Broadway import settings
 from main.models import Movie
-import tmdb3
+# import tmdb3
 
 
 # import pyrebase
@@ -28,7 +28,7 @@ import tmdb3
 # auth = firebase.auth()
 # ref = firebase.database()
 # Require login to see own profile
-tmdb3.set_key(settings.API_KEY)
+# tmdb3.set_key(settings.API_KEY)
 
 @login_required
 def profile(request):

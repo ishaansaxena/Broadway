@@ -29,7 +29,7 @@
             <p class="data-outer">
                 <span class="data"><span class="interactions">{{ profile.followers }}</span> followers</span>
                 <span class="data"><span class="interactions">{{ profile.following }}</span> following</span>
-                <span class="data"><span class="interactions">0</span> posts</span>
+                <span class="data"><span class="interactions">{{ activities.count }}</span> activities</span>
             </p>
         </div>
     </div>
@@ -42,34 +42,19 @@
             <div class="btn btn-follow">Follow</div>
         {% endif %}
     </div>
-    <div class="section">
-
-    </div>
-    <!-- <form action="{% url 'profile' %}" method="post">
-        {{ user.username }}
-        {{ user.email }}
-        {% csrf_token %}
-        {% if form.name.errors %}
-            {{ form.name.errors }}
-        {% endif %}
-        {{ form.name }}
-        {% if form.birth_date.errors %}
-            {{ form.birth_date.errors }}
-        {% endif %}
-        {{ form.birth_date }}
-        {% if form.bio.errors %}
-            {{ form.bio.errors }}
-        {% endif %}
-        {{ form.bio }}
-        {% if form.profile_picture.errors %}
-            {{ form.profile_picture.errors }}
-        {% endif %}
-        {{ form.profile_picture }}
-        <div class="button-group">
-            <input class="btn" type="submit" value="Update"/>
-            <input type="hidden" name="next" value="/"/>
+</div>
+<div class="container small">
+    {% for activity in activities %}
+        <div class="section">
+            {% if activity.movie %}
+            {% else %}
+                <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                {{ activity.activity_type }}
+                <a href="/u/{{ activity.activity_user }}">{{ activity.activity_user }}</a>
+                at {{ activity.created_at }}
+            {% endif%}
         </div>
-    </form> -->
+    {% endfor %}
 </div>
 {% endblock %}
 {% block scripts %}

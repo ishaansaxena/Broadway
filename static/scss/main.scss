@@ -34,11 +34,14 @@ body{
     margin: 0 10%;
     // padding: 1.5rem 0;
     width: auto;
+    &.small {
+        margin: 0 25%;
+    }
 }
 
 .section {
     width: auto;
-    padding: 3rem 4rem;
+    padding: 2rem 3rem;
     margin: 2rem 0 0 0;
     background: $wl;
     border: solid 1px $we;

@@ -22,6 +22,10 @@ class Profile(models.Model):
         default='static/assets/user_images/default.png',
         blank=True
     )
+    # Created at
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
     # User has followers and following
     followers = models.IntegerField(default=0)
     following = models.IntegerField(default=0)
@@ -64,6 +68,10 @@ class Activity(models.Model):
         related_name="activity_user",
         null=True,
         blank=True
+    )
+    # Created at
+    created_at = models.DateTimeField(
+        auto_now_add=True
     )
     def __str__(self):
         return str(self.main_user) + " >> " + self.activity_type

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from .models import Movie
+from user.models import Profile, Activity, Follow
 from django.core.exceptions import ObjectDoesNotExist
 from Broadway import settings
 # import tmdb3

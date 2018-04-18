@@ -146,7 +146,7 @@ def searchMovie(request, movieId):
         movie = Movie.objects.get(movie_id=movieId)
     except ObjectDoesNotExist:
         res = tmdb3.Movie(movieId)
-        movie = Movie(movie_id=movieId, title=res.title, overview=res.overview, release_daate=res.releasedate,
+        movie = Movie(movie_id=movieId, title=res.title, overview=res.overview, release_date=res.releasedate,
                       rating=res.userrating, poster=res.poster, genre=res.genres)
         movie.save()
 

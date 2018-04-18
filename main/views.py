@@ -7,7 +7,7 @@ from Broadway import settings
 # import tmdb3
 
 # tmdb3.set_key(settings.API_KEY)
-from user.models import Profile, Follow
+from user.models import Profile, Follow, Activity
 
 # Index view for broadway app. Loads main/index template
 def index(request):

@@ -30,17 +30,13 @@ tmdb3.set_key(settings.API_KEY)
 
 @login_required
 def profile(request):
-    current_user = User.objects.get(id=request.user.id)
-    user_profile = Profile.objects.get(user=current_user)
-    if request.method == "POST":
-        return render(request, 'user/profile.html', {})
-    else:
-        form = ProfileUpdateForm(instance=user_profile)
-        context = {
-            'form': form,
-            'profile': user_profile,
-        }
-        return render(request, 'user/profile.html', context)
+    user_profile = Profile.objects.get(user=request.user)
+    activities = Activity.objects.filter(main_user=user_profile).order_by('-created_at')
+    context = {
+        'profile': user_profile,
+        'activities': activities,
+    }
+    return render(request, 'user/profile.html', context)
 
     # context = {}
     # template = loader.get_template('user/profile.html')
@@ -59,10 +55,13 @@ def peer_profile(request, username):
     for follower in current_user.follow_set.all():
         if follower.followed_user == user_profile:
             is_followed = True
+    # Get activities
+    activities = Activity.objects.filter(main_user=user_profile).order_by('-created_at')
     context = {
         'profile': user_profile,
         'user': user,
         'is_followed': is_followed,
+        'activities': activities,
     }
     return render(request, 'user/peerprofile.html', context)
 

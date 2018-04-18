@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+<<<<<<< HEAD
 from django.template import loader
 from .models import Movie
 from django.core.exceptions import ObjectDoesNotExist
@@ -7,9 +8,12 @@ from Broadway import settings
 import tmdb3
 
 tmdb3.set_key(settings.API_KEY)
+from user.models import Profile, Follow
 
 # Index view for broadway app. Loads main/index template
 def index(request):
+    user_profile = Profile.objects.get(user=request.user)
+    following = Follow.objects.get(main_user=user_profile)
     context = {}
     template = loader.get_template('main/index.html')
     return HttpResponse(template.render(context, request))
@@ -26,3 +30,4 @@ def searchMovie(request, movieId):
 
     context = {'movie': movie}
     return render(request, "main/movie.html", context)
+

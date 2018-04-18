@@ -1,4 +1,4 @@
-<!-- <form action="{% url 'profile' %}" method="post">
+<form action="{% url 'edit' %}" method="post">
     {{ user.username }}
     {{ user.email }}
     {% csrf_token %}
@@ -18,4 +18,4 @@
         <input class="btn" type="submit" value="Update"/>
         <input type="hidden" name="next" value="/"/>
     </div>
-</form> -->
+</form>

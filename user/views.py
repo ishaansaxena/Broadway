@@ -137,3 +137,26 @@ def register(request):
             login(request, new_user)
             return redirect('index')
     return render(request, 'user/register.html', {'form': form})
+
+def edit(request):
+    form = ProfileUpdateForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            user_profile = Profile.objects.get(user=request.user)
+            user_profile.bio = form.cleaned_data['bio']
+            user_profile.name = form.cleaned_data['name']
+            user_profile.profile_picture = form.cleaned_data['profile_picture']
+            # user_profile.birth_date = form.cleaned_data['birth_date']
+            user_profile.save()
+            return redirect('profile')
+    return render(request, 'user/edit_profile.html', {'form':form})
+
+
+
+            
+
+
+
+
+
+

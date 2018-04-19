@@ -43,6 +43,13 @@
                 font-weight: bolder;
             }
         }
+        @media #{$mq} {
+            text-align: center;
+            display: block;
+            .data {
+                display: inline-block;
+            }
+        }
     }
 }
 

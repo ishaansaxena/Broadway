@@ -35,7 +35,7 @@
     text-decoration: none;
     color: inherit;
     float: right;
-    height: 5rem;
+    height: 4rem;
     width: 3rem;
     -webkit-transition: all 0.25s ease;
     -o-transition: all 0.25s ease;
@@ -56,20 +56,20 @@
     color: inherit;
     font-family: "Playfair Display", serif;
     font-weight: bolder;
-    font-size: 2.5rem;
-    height: 2.5rem;
+    font-size: 2rem;
+    height: 2rem;
     width: auto;
-    padding: 1.25rem 0; }
+    padding: 0.75rem 0; }
     .menu .logo::after {
       content: '';
       display: block;
       position: relative;
       background: #2196F3;
       width: 60%;
-      height: 0.3rem;
-      -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%); }
+      height: 0.2rem;
+      -webkit-transform: translateY(-33%);
+      -ms-transform: translateY(-33%);
+      transform: translateY(-33%); }
     .menu .logo:hover {
       color: #212121; }
     .menu .logo.menu-item {
@@ -81,4 +81,4 @@
       -ms-transform: translateY(-50%);
       transform: translateY(-50%); }
   .menu .container {
-    height: 5rem; }
+    height: 4rem; }

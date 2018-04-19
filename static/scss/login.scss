@@ -7,6 +7,20 @@
     background: $wl;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+
+    &.relative {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        margin: 3rem 25%;
+        padding: 2rem 4rem;
+        @media #{$mq} {
+            margin: 3rem 25px;
+        }
+    }
 
     .logo {
         font-family: "Playfair Display", serif;
@@ -23,15 +37,65 @@
     }
 
     p {
-        text-align: center;
+        &.center {
+            text-align: center;
+            line-height: 1.25;
+        }
+        &.small {
+            margin: 0;
+            font-weight: 300;
+        }
+        font-weight: 400;
+    }
+
+    input[type='text'],
+    input[type='password'],
+    input[type='email'],
+    textarea {
+        display: block;
+        position: relative;
+        width: 75%;
+        margin: 0.25rem auto;
+        padding: 0.75rem 1rem;
+        font-family: "Lato", sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        color: $bl;
+        border: solid 2px rgba($bl, 0.125);
+        outline: none;
+    }
+
+    &.left {
+        input[type='text'],
+        input[type='password'],
+        input[type='email'],
+        textarea {
+            margin: 0.25rem 0;
+            width: 80%
+        }
     }
 }
 
 .form-container {
-    margin: 3rem 0 0 0;
+    margin: 0 0 0 0;
+    margin-top: 3rem;
 }
 
 .btn-container {
     margin: 2rem 0 0 0;
     text-align: center;
+}
+
+.margin {
+    margin-top: 2rem;
+}
+
+h3 {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+
+a {
+    overflow-wrap: break-word;
 }

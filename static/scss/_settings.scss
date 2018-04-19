@@ -19,3 +19,6 @@ $gl:    #BDBDBD;    // Grey Light
 ::-webkit-scrollbar       {width: 5px; height: 5px;}
 ::-webkit-scrollbar-track {background: $wd;}
 ::-webkit-scrollbar-thumb {background: $pm;}
+
+// MQs
+$mq: "(max-width: 1024px)";

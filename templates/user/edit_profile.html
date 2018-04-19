@@ -17,27 +17,30 @@
 <!-- Main content -->
 {% block content %}
     {% if user.is_authenticated %}
-        <div class="login">
-            <div class="logo">Broadway</div>
+        <div class="login left relative">
+            <h3>Edit Profile</h3>
+            <p class="small">Username: {{ user.username }}</p>
+            <p class="small">Email: {{ user.email }}</p>
             <div class="form-container">
                 <!-- Main index page -->
                 <form action="{% url 'edit' %}" method="post" enctype="multipart/form-data">
-                    {{ user.username }}
-                    {{ user.email }}
                     {% csrf_token %}
                     {% if form.name.errors %}
                         {{ form.name.errors }}
                     {% endif %}
+                    <p>Name:</p>
                     {{ form.name }}
                     {% if form.bio.errors %}
                         {{ form.bio.errors }}
                     {% endif %}
+                    <p>Bio:</p>
                     {{ form.bio }}
                     {% if form.profile_picture.errors %}
                         {{ form.profile_picture.errors }}
                     {% endif %}
+                    <p>Profile Picture:</p>
                     {{ form.profile_picture }}
-                    <div class="button-group">
+                    <div class="button-group margin">
                         <input class="btn" type="submit" value="Update"/>
                         <input type="hidden" name="next" value="/"/>
                     </div>

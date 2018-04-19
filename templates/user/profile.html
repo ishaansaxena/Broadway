@@ -19,7 +19,7 @@
 <div class="container">
     <div class="section transparent profile-outer">
         <div class="profile profile-picture">
-            <img src="{% static 'assets/user_images/default.png' %}">
+            <img src="/{{ profile.profile_picture }}">
         </div>
         <div class="profile profile-data">
             <h1 class="username">{{user.username}}</h1>
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="btn-container">
-        <div class="btn btn-edit">Edit Profile</div>
+        <a href="{% url 'edit' %}" class="btn btn-edit">Edit Profile</a>
     </div>
 </div>
 <div class="container small">

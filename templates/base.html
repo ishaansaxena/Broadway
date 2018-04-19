@@ -23,7 +23,7 @@
     </head>
     <body>
         <div class="main">
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and form == null %}
             <div class="menu">
                 <div class="container">
                     <a href="{% url 'index' %}" class="logo menu-item">

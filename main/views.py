@@ -3,14 +3,16 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import Movie
 from user.models import Profile, Activity, Follow
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from Broadway import settings
 # import tmdb3
 
 # tmdb3.set_key(settings.API_KEY)
-from user.models import Profile, Follow
+from user.models import Profile, Follow, Activity
 
 # Index view for broadway app. Loads main/index template
+@login_required
 def index(request):
     user_profile = Profile.objects.get(user=request.user)
     all_activities = Activity.objects.all().order_by('-created_at')

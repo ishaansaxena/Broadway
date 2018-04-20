@@ -17,7 +17,19 @@
 <!-- Main content -->
 {% block content %}
     {% if user.is_authenticated %}
-        <!-- Main index page -->
+        <div class="container small">
+            {% for activity in activities %}
+                <div class="section">
+                    {% if activity.movie %}
+                    {% else %}
+                        <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                        {{ activity.activity_type }}
+                        <a href="/u/{{ activity.activity_user }}">{% if activity.activity_user.user == request.user %}you{% else %}{{ activity.activity_user }}{% endif %}</a>
+                        at {{ activity.created_at }}
+                    {% endif%}
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
         <div class="login">
             <div class="logo">Broadway</div>

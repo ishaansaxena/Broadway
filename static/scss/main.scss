@@ -36,6 +36,9 @@ body{
     width: auto;
     &.small {
         margin: 0 25%;
+        @media #{$mq} {
+            margin: 0 25px;
+        }
     }
 }
 

@@ -26,7 +26,7 @@ from main.models import Movie
 # auth = firebase.auth()
 # ref = firebase.database()
 # Require login to see own profile
-tmdb3.set_key(settings.API_KEY)
+# tmdb3.set_key(settings.API_KEY)
 
 @login_required
 def profile(request):
@@ -137,3 +137,24 @@ def register(request):
             login(request, new_user)
             return redirect('index')
     return render(request, 'user/register.html', {'form': form})
+
+def edit(request):
+    user_profile = Profile.objects.get(user=request.user)
+    initial = {
+        'profile_picture': user_profile.profile_picture
+    }
+    form = ProfileUpdateForm(request.POST, request.FILES, initial=initial)
+    if request.method == 'POST':
+        if form.is_valid():
+            if form.cleaned_data['bio']:
+                user_profile.bio = form.cleaned_data['bio']
+            if form.cleaned_data['name']:
+                user_profile.name = form.cleaned_data['name']
+            user_profile.profile_picture = form.cleaned_data['profile_picture']
+            print(user_profile.bio)
+            print(user_profile.name)
+            print(user_profile.profile_picture)
+            # user_profile.birth_date = form.cleaned_data['birth_date']
+            user_profile.save()
+            return redirect('profile')
+    return render(request, 'user/edit_profile.html', {'form':form, 'profile': user_profile})

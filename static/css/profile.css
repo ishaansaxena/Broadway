@@ -53,6 +53,12 @@
       font-size: 1rem; }
       .profile.profile-data .data .interactions {
         font-weight: bolder; }
+    @media (max-width: 1024px) {
+      .profile.profile-data {
+        text-align: center;
+        display: block; }
+        .profile.profile-data .data {
+          display: inline-block; } }
 
 .btn-container {
   width: 100%;

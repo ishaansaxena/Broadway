@@ -6,9 +6,10 @@ import Broadway.settings as settings
 # Create your models here.
 
 class Movie(models.Model):
+    #id for db
+    id = models.IntegerField(primary_key=True)
     #movie has id in database
-    movie_id = models.IntegerField(primary_key=True)
-
+    movie_id = models.IntegerField(null=True)
     #title of movie
     title = models.CharField(max_length=100)
     #overview of movie

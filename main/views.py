@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-<<<<<<< HEAD
 from django.template import loader
 from .models import Movie
 from django.core.exceptions import ObjectDoesNotExist

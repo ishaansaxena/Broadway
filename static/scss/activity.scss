@@ -1,0 +1,33 @@
+.row {
+    margin-bottom: 3px;
+    .profile-picture {
+        display: inline-block;
+        width: 2.25rem;
+        height: 2.25rem;
+        img {
+            object-fit: cover;
+            height: inherit;
+            width: inherit;
+            display: block;
+            position: relative;
+            border-radius: 50%;
+        }
+    }
+}
+
+.heading {
+    display: inline-block;
+    height: 2rem;
+    width: auto;
+    margin-left: 5px;
+    h2 {
+        font-size: 1.5rem;
+        padding: 0;
+        margin: 0;
+        font-family: "Lato", sans-serif;
+        font-weight: 300;
+        display: block;
+        top: 50%;
+        transform: translateY(-40%);
+    }
+}

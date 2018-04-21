@@ -12,6 +12,7 @@
 <!-- Load assets -->
 {% block assets %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/activity.css' %}">
 {% endblock %}
 
 <!-- Main content -->
@@ -40,13 +41,29 @@
 <div class="container small">
     {% for activity in activities %}
         <div class="section">
-            {% if activity.movie %}
-            {% else %}
-                <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
-                {{ activity.activity_type }}
-                <a href="/u/{{ activity.activity_user }}">{{ activity.activity_user }}</a>
-                at {{ activity.created_at }}
-            {% endif%}
+            <div class="row">
+                <div class="profile-picture">
+                    <img src="/{{ activity.main_user.profile_picture }}">
+                </div>
+                <div class="heading">
+                    <h2>
+                    {% if activity.main_user.name %}
+                        {{ activity.main_user.name }}
+                    {% else %}
+                        {{ activity.main_user }}
+                    {% endif %}
+                    </h2>
+                </div>
+            </div>
+            <div class="row">
+                {% if activity.movie %}
+                {% else %}
+                    <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                    {{ activity.activity_type }}
+                    <a href="/u/{{ activity.activity_user }}">{% if activity.activity_user.user == request.user %}you{% else %}{{ activity.activity_user }}{% endif %}</a>
+                    at {{ activity.created_at }}
+                {% endif %}
+            </div>
         </div>
     {% endfor %}
 </div>

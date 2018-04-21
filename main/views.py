@@ -2,14 +2,15 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from .models import Movie
+from django.contrib.auth.models import User
 from user.models import Profile, Activity, Follow
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from Broadway import settings
-# import tmdb3
-
-# tmdb3.set_key(settings.API_KEY)
+from django.views.decorators.csrf import csrf_exempt
 from user.models import Profile, Follow, Activity
+from django.db.models import Q
+
+from tmdbv3api import Movie, TV
 
 # Index view for broadway app. Loads main/index template
 @login_required
@@ -29,7 +30,34 @@ def index(request):
         'activities': activities,
     }
     return render(request, 'main/index.html', context)
-#
+
+@csrf_exempt
+def search(request, query):
+    query = query.split("-")
+    # movie search
+    movie = Movie()
+    m_search = movie.search(str(query))
+    movies = []
+    for res in m_search:
+        movies.append(res.title)
+    # tv search
+    tv = TV()
+    t_search = tv.search(str(query))
+    tv = []
+    for res in t_search:
+        tv.append(res.name)
+    # user search
+    users = User.objects.filter(Q(username__icontains=" ".join(query)))
+    profiles = []
+    for user in users:
+        profiles.append(Profile.objects.get(user=user))
+    context = {
+        "movies": movies,
+        "tv": tv,
+        "profiles": profiles,
+    }
+    return render(request, 'main/search.html', context)
+
 # def searchMovie(request, movieId):
 #     try:
 #         movie = Movie.objects.get(movie_id=movieId)

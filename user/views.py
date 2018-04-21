@@ -151,9 +151,6 @@ def edit(request):
             if form.cleaned_data['name']:
                 user_profile.name = form.cleaned_data['name']
             user_profile.profile_picture = form.cleaned_data['profile_picture']
-            print(user_profile.bio)
-            print(user_profile.name)
-            print(user_profile.profile_picture)
             # user_profile.birth_date = form.cleaned_data['birth_date']
             user_profile.save()
             return redirect('profile')

@@ -26,8 +26,12 @@ SECRET_KEY = 'x5hx(8s3^(pdl(&vvzbvn04q4s_^tfk*v0vd#c8fr610nxnx_)'
 DEBUG = True
 
 #TMDB API Keys
+
+from tmdbv3api import TMDb
 API_KEY = "9f330f7fda1e5169e70f092cbdfb589e"
 API_READ_ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZjMzMGY3ZmRhMWU1MTY5ZTcwZjA5MmNiZGZiNTg5ZSIsInN1YiI6IjVhZDE1ZjVhMGUwYTI2NmMyMjAwNGYyNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8jUYHf8UFtamnvLatZF3mO_yaAbWiKV_KC9IOwxTdfg"
+tmdb = TMDb()
+tmdb.api_key = API_KEY
 
 # Application definition
 

@@ -58,6 +58,15 @@ def search(request, query):
     }
     return render(request, 'main/search.html', context)
 
+def moviedetails(request):
+    #TODO: Change get(id=request.id)
+    movie = Movie.objects.get(id=1234)
+    context = {
+        'movie': movie
+    }
+    return render(request,'main/movie.html', context)
+
+#
 # def searchMovie(request, movieId):
 #     try:
 #         movie = Movie.objects.get(movie_id=movieId)

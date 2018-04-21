@@ -19,7 +19,11 @@ class Movie(models.Model):
     #user ratings of movie
     rating = models.FloatField()
     #poster representing movie
-    poster = models.ImageField()
+    poster = models.ImageField(    
+        upload_to='static/assets/movies_images/',
+        default='static/assets/movies_images/default.png',
+        blank=True
+    )
     #genre
     genre = models.CharField(max_length=100)
 

@@ -1,10 +1,23 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name ="viewport" content="with=device-width, initial-scale=1">
+    <title>
+    	Broadway - Movies
+    </title>
+    <style>
+    body {font-family: "Lato", sans-serif}
+    .mySlides {display: none}
+</style>
 </head>
 <body>
-
+	<h1 class="name">{{movie.title}} </h1>
+	<img src="/{{movie.poster}}" alt = "{{movie.title}}" width="400" height="500"></img>
+	<p> <b><b>OVERVIEW</b>: <i>{{movie.overview}}</i> </p>
+    <p> <b>RATINGS</b>: <i>{{movie.rating}}</i></p>
+    
 </body>
 </html>

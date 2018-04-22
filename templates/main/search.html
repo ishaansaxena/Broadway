@@ -1,12 +1,32 @@
-<h1>Movies</h1>
-{% for result in movies %}
-    {{ result }}<br>
-{% endfor %}
-<h1>TV Shows</h1>
-{% for result in tv %}
-    {{ result }}<br>
-{% endfor %}
-<h1>People</h1>
-{% for result in profiles %}
-    {{ result }}<br>
-{% endfor %}
+<!-- Extend base file -->
+{% extends "base.html" %}
+
+<!-- Load static files -->
+{% load static %}
+
+<!-- Create title -->
+{% block title %}
+    Broadway - Home
+{% endblock %}
+
+<!-- Load assets -->
+{% block assets %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/activity.css' %}">
+{% endblock %}
+
+<!-- Main content -->
+{% block content %}
+    <h1>Movies</h1>
+    {% for result in movies %}
+        {{ result }}<br>
+    {% endfor %}
+    <h1>TV Shows</h1>
+    {% for result in tv %}
+        {{ result }}<br>
+    {% endfor %}
+    <h1>People</h1>
+    {% for result in profiles %}
+        {{ result }}<br>
+    {% endfor %}
+{% endblock %}

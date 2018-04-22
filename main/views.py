@@ -10,7 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from user.models import Profile, Follow, Activity
 from django.db.models import Q
 
-from tmdbv3api import Movie, TV
+from tmdbv3api import Movie as m
+from tmdbv3api import TV as t
 
 # Index view for broadway app. Loads main/index template
 @login_required
@@ -35,13 +36,13 @@ def index(request):
 def search(request, query):
     query = query.split("-")
     # movie search
-    movie = Movie()
+    movie = m()
     m_search = movie.search(str(query))
     movies = []
     for res in m_search:
         movies.append(res.title)
     # tv search
-    tv = TV()
+    tv = t()
     t_search = tv.search(str(query))
     tv = []
     for res in t_search:

@@ -60,11 +60,13 @@ def peer_profile(request, username):
             is_followed = True
     # Get activities
     activities = Activity.objects.filter(main_user=user_profile).order_by('-created_at')
+    watchlist = Watchlist.objects.filter(main_user=user_profile)
     context = {
         'profile': user_profile,
         'user': user,
         'is_followed': is_followed,
         'activities': activities,
+        'watchlist': watchlist
     }
     return render(request, 'user/peerprofile.html', context)
 

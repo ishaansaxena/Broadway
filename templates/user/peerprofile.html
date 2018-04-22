@@ -73,6 +73,25 @@
         </div>
     {% endfor %}
 </div>
+<div class="container small">
+    <h3> Watchlist </h3>
+    {{ watchlist|length }}
+    {% for object in watchlist %}
+    <div class="section">
+        <div class="row">
+            <div class="movie-image">
+                <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{object.movie_watchlist_element.poster}}" alt="{{movie.title}}" width="400" height="500"></img>
+            </div>
+            <div class="heading">
+                <h2>
+                    {{ object.movie_watchlist_element.title }}
+                </h2>
+                <p> <b> Overview: </b> {{ object.movie_watchlist_element.overview }} </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript" src="{% static 'js/peer.js' %}"></script>

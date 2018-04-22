@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+ALLOWED_HOSTS = [
+    'broadway.herokuapp.com'
+]
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',

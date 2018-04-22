@@ -1,5 +1,5 @@
 @import "settings.scss";
-@import url('https://fonts.googleapis.com/css?family=Lato|Playfair+Display');
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display');
 
 // Font smoothing
 html {
@@ -19,84 +19,14 @@ html {
     -webkit-perspective: 1000;
 }
 
-// Body default settings
-body{
-    // Set width and min height
-    width: 100%;
-    min-height: 100vh;
-    // Set background color
+body {
     background: $wd;
 }
 
-.container {
-    display: block;
-    position: relative;
-    margin: 0 10%;
-    // padding: 1.5rem 0;
-    width: auto;
-    &.small {
-        margin: 0 25%;
-        @media #{$mq} {
-            margin: 0 25px;
-        }
-    }
-}
-
-.section {
-    width: auto;
-    padding: 2rem 3rem;
-    margin: 2rem 0 0 0;
-    background: $wl;
-    border: solid 1px $we;
-    &.transparent {
-        padding: 1rem 4rem;
-        background: transparent;
-        border: none;
-    }
-}
-
-.btn {
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    padding: 0.75rem 1rem;
-    background: $pd;
-    color: $wl;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    text-align: center;
-    font-family: "Lato", sans-serif;
-    font-weight: 400;
-    font-size: 1rem;
-    background: $pm;
-    transition: all 0.15s ease;
-    &:hover {
-        background: $pd;
-    }
-    &.accent {
-        background: lighten($ac, 5%);
-        &:hover {
-            background: $ac;
-        }
-    }
-}
-
-input[type='text'],
-input[type='password'],
-input[type='email'],
-textarea {
-    display: block;
-    position: relative;
-    width: 75%;
-    margin: 0.25rem auto;
-    padding: 0.75rem 1rem;
-    font-family: "Lato", sans-serif;
-    font-weight: 400;
-    font-size: 1rem;
-    color: $bl;
-    border: solid 2px rgba($bl, 0.125);
-    outline: none;
+.navbar-brand {
+    font-family: "Playfair Display";
+    font-weight: 100;
+    font-size: 2rem;
 }
 
 .search-view {

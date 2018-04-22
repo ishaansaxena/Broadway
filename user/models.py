@@ -33,6 +33,7 @@ class Profile(models.Model):
     # Activities for all users can be gotten by a similar relation
     # author = Author.objects.get(id=1)
     # books = author.book_set.all()
+    #TODO: add a watchlist
 
     # Return username as object descriptor
     def __str__(self):
@@ -59,7 +60,7 @@ class Activity(models.Model):
     movie = models.ForeignKey(
         main.models.Movie,
         on_delete=models.CASCADE,
-        related_name="movie",
+        related_name="add_movie",
         null=True,
         blank=True
     )
@@ -124,16 +125,17 @@ def follow_pre_delete(sender, instance, **kwargs):
 post_save.connect(follow_post_save, Follow)
 pre_delete.connect(follow_pre_delete, Follow)
 
-# #module for user's
-# class Watchlist(models.Model):
-#     main_user = models.ForeignKey(
-#         Profile,
-#         on_delete=models.CASCADE,
-#         null=True
-#     )
-#
-#     movie_watchlist_element = models.ForeignKey(
-#         Movie,
-#         on_delete=models.CASCADE,
-#         related_name="movie"
-#     )
+#module for user's
+class Watchlist(models.Model):
+     main_user = models.ForeignKey(
+         Profile,
+         on_delete=models.CASCADE,
+         null=True
+     )
+
+     movie_watchlist_element = models.ForeignKey(
+         Movie,
+         on_delete=models.CASCADE,
+         related_name="movie",
+         null=True
+     )

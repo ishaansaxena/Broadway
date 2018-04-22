@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import tmdbv3api
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,6 +34,9 @@ API_READ_ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZjMzMG
 tmdb = TMDb()
 tmdb.api_key = API_KEY
 
+#register API Key in project
+tmdb = tmdbv3api.TMDb()
+tmdb.api_key = API_KEY
 # Application definition
 
 INSTALLED_APPS = [

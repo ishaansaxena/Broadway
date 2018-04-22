@@ -10,6 +10,8 @@ from .forms import RegistrationForm, ProfileUpdateForm
 from .models import *
 from Broadway import settings
 from main.models import Movie
+import main.views
+import tmdbv3api
 
 # import pyrebase
 
@@ -65,6 +67,17 @@ def peer_profile(request, username):
     }
     return render(request, 'user/peerprofile.html', context)
 
+# add movie to watchlist
+def add_watchlist(request, movieId):
+    if request.method == "POST":
+        user_profile = Profile.objects.get(user=request.user)
+        movie = main.views.get_movie(movieId)
+        #create a watchlist
+        watchlist = Watchlist(main_user=user_profile, movie_watchlist_element=movie)
+        watchlist.save()
+
+    return HttpResponse("OK")
+
 @csrf_exempt
 def follow(request, username):
     if username == request.user.username:
@@ -118,6 +131,8 @@ def unfollow(request, username):
             #If not following do nothing
             return HttpResponse("OK")
 
+def discover(request):
+    return None
 
 def register(request):
     form = RegistrationForm(request.POST or None)

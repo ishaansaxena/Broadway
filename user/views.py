@@ -73,7 +73,7 @@ def peer_profile(request, username):
 # add movie to watchlist
 @csrf_exempt
 def add_watchlist(request, movieId):
-    if request.method == "POST":
+    if request.method == "GET":
         user_profile = Profile.objects.get(user=request.user)
         movie = main.views.getmovie(movieId)
         #create a watchlist
@@ -91,7 +91,7 @@ def add_watchlist(request, movieId):
 #remove watchlist
 @csrf_exempt
 def remove_watchlist(request, movieId):
-    if request.method == "POST":
+    if request.method == "GET":
         user_profile = Profile.objects.get(user=request.user)
         movie = main.views.getmovie(movieId)
         w = Watchlist.objects.filter(main_user=user_profile)

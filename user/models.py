@@ -60,7 +60,7 @@ class Activity(models.Model):
     movie = models.ForeignKey(
         main.models.Movie,
         on_delete=models.CASCADE,
-        related_name="add_movie",
+        related_name="added",
         null=True,
         blank=True
     )
@@ -142,3 +142,28 @@ class Watchlist(models.Model):
 
     def __str__(self):
         return str(self.main_user) + " " + str(self.movie_watchlist_element)
+
+def watchlist_post_save(sender, instance, created, **kwargs):
+    if created:
+        p = Profile.objects.get(user=instance.main_user.user)
+        # Create an activity
+        activity = Activity(
+            activity_type="added",
+            main_user=p,
+            movie=instance.movie_watchlist_element
+        )
+        activity.save()
+
+def watchlist_pre_delete(sender, instance, **kwargs):
+    # Delete watchlist activity
+    p = Profile.objects.get(user=instance.main_user.user)
+    activity = Activity.objects.get(
+        activity_type="added",
+        main_user=p,
+        movie=instance.movie_watchlist_element
+    )
+    activity.delete()
+
+post_save.connect(watchlist_post_save, Watchlist)
+pre_delete.connect(watchlist_pre_delete, Watchlist)
+

@@ -71,10 +71,20 @@ def peer_profile(request, username):
 def add_watchlist(request, movieId):
     if request.method == "POST":
         user_profile = Profile.objects.get(user=request.user)
-        movie = main.views.get_movie(movieId)
+        movie = main.views.getmovie(movieId)
         #create a watchlist
         watchlist = Watchlist(main_user=user_profile, movie_watchlist_element=movie)
         watchlist.save()
+
+    return HttpResponse("OK")
+
+#remove watchlist
+def remove_watchlist(request, movieId):
+    if request.method == "POST":
+        user_profile = Profile.objects.get(user=request.user)
+        movie = main.views.getmovie(movieId)
+        watchlist = Watchlist.objects.get(main_user=user_profile, movie_watchlist_element=movie)
+        watchlist.delete()
 
     return HttpResponse("OK")
 

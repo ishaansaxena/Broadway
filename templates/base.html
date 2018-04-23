@@ -14,7 +14,7 @@
         {% block assets %}
         {% endblock %}
     </head>
-    <body>
+    <body class="{% if not user.is_authenticated %}text-center{% endif %}">
         <!-- <div class="search-view">
             <div class="search-block">
                 <input class="search-field" type="text" name="" value="Search">

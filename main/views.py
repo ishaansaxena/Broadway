@@ -59,38 +59,6 @@ def search(request, query):
     }
     return render(request, 'main/search.html', context)
 
-"""def discover(request):
-    if request.method == "POST":
-        user_profile = Profile.objects.get(user=user_profile)
-        watchlists = Watchlist.objects.filter(main_user=user_profile)
-        if not watchlists:
-            #if user hasnt added anything to his/her watchlist, fill discover template with the popular movies
-            movie = tmdbv3api.Movie()
-            popular = movie.popular()
-            context = {'discover_movies': popular}
-        else:
-            #user has movies in his/her watchlist
-            recommendations = []
-            for watchlist in watchlists:
-                tmp_movie = tmdbv3api.Movie()
-                #get similar movies
-                similar = tmp_movie.similar(watchlist.movie_watchlist_element.id)
-                for movie in similar:
-                    recommendations.append(movie)
-                    if len(recommendations) >= 100:
-                        break
-
-                if len(recommendations) >= 100:
-                    break
-
-            #shuffle list to have randomness in recommendations
-            random.shuffle(recommendations)
-            context = {'discover_movies': recommendations}
-
-        return render(request, 'main/discover.html', context)
-
-    return HttpResponse("OK")
-"""
 def moviedetails(request, ids):
     movie = getmovie(ids)
     context = {

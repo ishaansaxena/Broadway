@@ -46,13 +46,42 @@ def profile(request):
     # return HttpResponse(template.render(context, request))
 
 #view user's watchlist
-"""def user_watchlist(request):
+def user_watchlist(request):
     user_profile = Profile.objects.get(user=request.user)
     watchlists = Watchlist.objects.filter(main_user=user_profile)
 
     context = {'watchlists': watchlists}
     return render(request, 'user/user_watchlist.html', context)
-"""
+
+def discover(request):
+    user_profile = Profile.objects.get(user=request.user)
+    watchlists = Watchlist.objects.filter(main_user=user_profile)
+    if not watchlists:
+        #if user hasnt added anything to his/her watchlist, fill discover template with the popular movies
+        movie = tmdbv3api.Movie()
+        popular = movie.popular()
+        context = {'discover_movies': popular}
+    else:
+        #user has movies in his/her watchlist
+        recommendations = []
+        for watchlist in watchlists:
+            tmp_movie = tmdbv3api.Movie()
+            #get similar movies
+            similar = tmp_movie.similar(watchlist.movie_watchlist_element.movie_id)
+            for movie in similar:
+                recommendations.append(movie)
+                if len(recommendations) >= 100:
+                    break
+
+            if len(recommendations) >= 100:
+                break
+
+        #shuffle list to have randomness in recommendations
+        random.shuffle(recommendations)
+        context = {'discover_movies': recommendations}
+
+    return render(request, 'user/discover.html', context)
+
 def peer_profile(request, username):
     if username == request.user.username:
         return redirect('profile')
@@ -81,7 +110,7 @@ def peer_profile(request, username):
 # add movie to watchlist
 @csrf_exempt
 def add_watchlist(request, movieId):
-    if request.method == "POST":
+    if request.method == "GET":
         user_profile = Profile.objects.get(user=request.user)
         movie = main.views.getmovie(movieId)
         #create a watchlist
@@ -99,7 +128,7 @@ def add_watchlist(request, movieId):
 #remove watchlist
 @csrf_exempt
 def remove_watchlist(request, movieId):
-    if request.method == "POST":
+    if request.method == "GET":
         user_profile = Profile.objects.get(user=request.user)
         movie = main.views.getmovie(movieId)
         w = Watchlist.objects.filter(main_user=user_profile)

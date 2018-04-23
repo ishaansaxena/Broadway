@@ -1,63 +1,66 @@
-<!-- Extend base file -->
-{% extends "base.html" %}
-
-<!-- Load static files -->
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Broadway - Login</title>
 
-<!-- Create title -->
-{% block title %}
-    Broadway - Register
-{% endblock %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Load assets -->
-{% block assets %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
-{% endblock %}
-
-<!-- Main content -->
-{% block content %}
-    {% if user.is_authenticated %}
-        <!-- Main index page -->
-        <div class="login">
-            <div class="logo">Broadway</div>
-            <div class="form-container">
-                <p class="center">You're already logged in.</p>
-                <div class="btn-container">
-                    <a href="{% url 'logout' %}" class="btn">Logout</a>
-                </div>
-            </div>
-        </div>
-    {% else %}
-        <div class="login">
-            <form action="{% url 'register' %}" method="post">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    </head>
+    <body class="text-center">
+        <main class="container" role="main">
+            {% if user.is_authenticated %}
                 <div class="logo">Broadway</div>
                 <div class="form-container">
-                    <form method="post" action="{% url 'login' %}">
-                        {% csrf_token %}
-                        {% if form.username.errors %}
-                            {{ form.username.errors }}
-                        {% endif %}
-                        {{ form.username }}
-                        {% if form.email.errors %}
-                            {{ form.email.errors }}
-                        {% endif %}
-                        {{ form.email }}
-                        {% if form.password1.errors %}
-                            {{ form.password1.errors }}
-                        {% endif %}
-                        {{ form.password1 }}
-                        {% if form.password2.errors %}
-                            {{ form.password2.errors }}
-                        {% endif %}
-                        {{ form.password2 }}
-                        <div class="btn-container button-group">
-                            <input class="btn" type="submit" value="Register"/>
-                            <input type="hidden" name="next" value="/"/>
-                            <a href="{% url 'login' %}" class="btn accent">Login</a>
-                        </div>
-                    </form>
+                    <p class="center">You're already logged in.</p>
+                    <div class="btn-container">
+                        <a href="{% url 'logout' %}" class="btn btn-md btn-primary">Logout</a>
+                        <a href="{% url 'index' %}" class="btn btn-md btn-success">Go Back</a>
+                    </div>
                 </div>
+            {% else %}
+            <form class="form-signin" action="{% url 'register' %}" method="post">
+                <div class="logo">Broadway</div>
+                <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+                {% csrf_token %}
+                {% if form.username.errors %}
+                    {{ form.username.errors }}
+                {% endif %}
+                {% if form.email.errors %}
+                    {{ form.email.errors }}
+                {% endif %}
+                {% if form.password1.errors %}
+                    {{ form.password1.errors }}
+                {% endif %}
+                {% if form.password2.errors %}
+                    {{ form.password2.errors }}
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="id_username" class="sr-only">Username</label>
+                    <input type="text" class="form-control" name="username" maxlength="150" autofocus placeholder="Username" required id="id_username" />
+
+                    <label for="id_email" class="sr-only">Email</label>
+                    <input type="email" class="form-control" name="email" placeholder="Email" required id="id_email" />
+                    <label for="id_password1" class="sr-only">Password</label>
+                    <input type="password" class="form-control" name="password1" placeholder="Password" required id="id_password1" />
+
+                    <label for="id_password2" class="sr-only">Password confirmation</label>
+                    <input type="password" class="form-control" name="password2" placeholder="Password confirmation" required id="id_password2" />
+                </div>
+
+                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register">
+                <input type="hidden" name="next" value="/"/>
+                <p class="mt-5 mb-3 text-muted">Already have an account? <a href="{% url 'login' %}">Sign in!</a></p>
             </form>
-        </div>
-    {% endif %}
-{% endblock %}
+            {% endif %}
+        </main>
+        <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+        <script src="{% static 'js/bootstrap.js' %}"></script>
+    </body>
+</html>

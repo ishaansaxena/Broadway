@@ -12,30 +12,21 @@
 <!-- Load assets -->
 {% block assets %}
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
-<link rel="stylesheet" href="{% static 'css/activity.css' %}">
 {% endblock %}
 
 <!-- Main content -->
 {% block content %}
     {% if user.is_authenticated %}
-        <div class="container small">
+        <div class="my-4 p-4 bg-white box-shadow">
+            <h6 class="border-bottom border-gray pb-2 mb-0">
+                Recent updates
+                <span class="badge badge-danger">{{ activities|length }}</span>
+            </h6>
             {% for activity in activities %}
-                <div class="section">
-                    <div class="row">
-                        <div class="profile-picture">
-                            <img src="/{{ activity.main_user.profile_picture }}">
-                        </div>
-                        <div class="heading">
-                            <h2>
-                            {% if activity.main_user.name %}
-                                {{ activity.main_user.name }}
-                            {% else %}
-                                {{ activity.main_user }}
-                            {% endif %}
-                            </h2>
-                        </div>
-                    </div>
-                    <div class="row">
+                <div class="media text-muted pt-3">
+                    <img src="/{{ activity.main_user.profile_picture }}" alt="" class="mr-3 align-self-center profile-picture">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                        <strong class="d-block text-gray-dark">@{{ activity.main_user }}</strong>
                         {% if activity.movie %}
                         {% else %}
                             <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
@@ -43,9 +34,12 @@
                             <a href="/u/{{ activity.activity_user }}">{% if activity.activity_user.user == request.user %}you{% else %}{{ activity.activity_user }}{% endif %}</a>
                             at {{ activity.created_at }}
                         {% endif %}
-                    </div>
+                    </p>
                 </div>
             {% endfor %}
+            <!-- <small class="d-block text-right mt-3">
+                <a href="#">All updates</a>
+            </small> -->
         </div>
     {% else %}
         <div class="login">

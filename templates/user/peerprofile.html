@@ -17,8 +17,7 @@
 
 <!-- Main content -->
 {% block content %}
-<div class="container">
-    <div class="section transparent profile-outer">
+    <div class="my-4 p-4 box-shadow profile-outer">
         <div class="profile profile-picture">
             <img src="/{{ profile.profile_picture }}">
         </div>
@@ -34,65 +33,52 @@
             </p>
         </div>
     </div>
-    <div class="btn-container">
-        <!-- <div class="btn btn-follow">Follow</div> -->
-        {% csrf_token %}
-        {% if is_followed %}
-            <div class="btn btn-unfollow">Unfollow</div>
-        {% else %}
-            <div class="btn btn-follow">Follow</div>
-        {% endif %}
+    <div class="my-4 p-4 bg-white box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">
+            Recent updates
+            <span class="badge badge-danger">{{ activities|length }}</span>
+        </h6>
+        {% for activity in activities %}
+            <div class="media text-muted pt-3">
+                <img src="/{{ activity.main_user.profile_picture }}" alt="" class="mr-3 align-self-center profile-picture">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@{{ activity.main_user }}</strong>
+                    {% if activity.movie %}
+                    {% else %}
+                        <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                        {{ activity.activity_type }}
+                        <a href="/u/{{ activity.activity_user }}">{% if activity.activity_user.user == request.user %}you{% else %}{{ activity.activity_user }}{% endif %}</a>
+                        at {{ activity.created_at }}
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+        <!-- <small class="d-block text-right mt-3">
+            <a href="#">All updates</a>
+        </small> -->
     </div>
-</div>
-<div class="container small">
-    {% for activity in activities %}
+    <div class="my-4 p-4 bg-white box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">
+            Watchlist
+            <span class="badge badge-danger">{{ watchlist|length }}</span>
+        </h6>
+        {% for object in watchlist %}
         <div class="section">
             <div class="row">
-                <div class="profile-picture">
-                    <img src="/{{ activity.main_user.profile_picture }}">
+                <div class="movie-image">
+                    <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{object.movie_watchlist_element.poster}}" alt="{{movie.title}}" width="400" height="500"></img>
                 </div>
                 <div class="heading">
                     <h2>
-                    {% if activity.main_user.name %}
-                        {{ activity.main_user.name }}
-                    {% else %}
-                        {{ activity.main_user }}
-                    {% endif %}
+                        {{ object.movie_watchlist_element.title }}
                     </h2>
+                    <p> <b> Overview: </b> {{ object.movie_watchlist_element.overview }} </p>
                 </div>
             </div>
-            <div class="row">
-                {% if activity.movie %}
-                {% else %}
-                    <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
-                    {{ activity.activity_type }}
-                    <a href="/u/{{ activity.activity_user }}">{% if activity.activity_user.user == request.user %}you{% else %}{{ activity.activity_user }}{% endif %}</a>
-                    at {{ activity.created_at }}
-                {% endif %}
-            </div>
         </div>
-    {% endfor %}
-</div>
-<div class="container small">
-    <h3> Watchlist </h3>
-    {{ watchlist|length }}
-    {% for object in watchlist %}
-    <div class="section">
-        <div class="row">
-            <div class="movie-image">
-                <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{object.movie_watchlist_element.poster}}" alt="{{movie.title}}" width="400" height="500"></img>
-            </div>
-            <div class="heading">
-                <h2>
-                    {{ object.movie_watchlist_element.title }}
-                </h2>
-                <p> <b> Overview: </b> {{ object.movie_watchlist_element.overview }} </p>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 {% endblock %}
 {% block scripts %}
-<script type="text/javascript" src="{% static 'js/peer.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/peer.js' %}"></script>
 {% endblock %}

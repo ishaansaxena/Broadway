@@ -11,9 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-<<<<<<< HEAD
-import tmdbv3api
-=======
 import pyrebase
 
 config = {
@@ -26,7 +23,6 @@ config = {
 }
 #Intialize Firebase
 firebase = pyrebase.initialize_app(config)
->>>>>>> 4467c0831ee05d1b9065a73f4dd4b627308abafe
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

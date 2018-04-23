@@ -59,7 +59,7 @@ def search(request, query):
     }
     return render(request, 'main/search.html', context)
 
-def discover(request):
+"""def discover(request):
     if request.method == "POST":
         user_profile = Profile.objects.get(user=user_profile)
         watchlists = Watchlist.objects.filter(main_user=user_profile)
@@ -90,7 +90,7 @@ def discover(request):
         return render(request, 'main/discover.html', context)
 
     return HttpResponse("OK")
-
+"""
 def moviedetails(request, ids):
     movie = getmovie(ids)
     context = {

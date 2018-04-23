@@ -45,6 +45,14 @@ def profile(request):
     # template = loader.get_template('user/profile.html')
     # return HttpResponse(template.render(context, request))
 
+#view user's watchlist
+"""def user_watchlist(request):
+    user_profile = Profile.objects.get(user=request.user)
+    watchlists = Watchlist.objects.filter(main_user=user_profile)
+
+    context = {'watchlists': watchlists}
+    return render(request, 'user/user_watchlist.html', context)
+"""
 def peer_profile(request, username):
     if username == request.user.username:
         return redirect('profile')

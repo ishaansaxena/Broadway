@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 ALLOWED_HOSTS = [
-    'broadway.herokuapp.com', 'localhost', '127.0,0.1'
+    'broadway.herokuapp.com', 'localhost', '127.0.0.1'
 ]
 
 MIDDLEWARE = [

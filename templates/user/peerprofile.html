@@ -12,17 +12,17 @@
 <!-- Load assets -->
 {% block assets %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-<link rel="stylesheet" href="{% static 'css/activity.css' %}">
+<link rel="stylesheet" href="{% static 'css/watchlist.css' %}">
 {% endblock %}
 
 <!-- Main content -->
 {% block content %}
-    <div class="my-4 p-4 box-shadow profile-outer">
+    <div class="mt-4 pt-4 box-shadow profile-outer">
         <div class="profile profile-picture">
             <img src="/{{ profile.profile_picture }}">
         </div>
         <div class="profile profile-data">
-            <h1 class="username">{{user.username}}</h1>
+            <h1 class="username">{{ user.username }}</h1>
             <p class="data-outer">
                 {{ profile.bio }}
             </p>
@@ -33,17 +33,28 @@
             </p>
         </div>
     </div>
+    <div class="mb-4 box-shadow text-center">
+        {% if is_followed %}
+        <a href="#" class="btn-unfollow btn btn-outline-secondary">Unollow</a>
+        {% else %}
+        <a href="#" class="btn-follow btn btn-outline-primary">Follow</a>
+        {% endif %}
+    </div>
     <div class="my-4 p-4 bg-white box-shadow">
         <h6 class="border-bottom border-gray pb-2 mb-0">
             Recent updates
             <span class="badge badge-danger">{{ activities|length }}</span>
         </h6>
-        {% for activity in activities %}
+        {% for activity in activities|slice:":5" %}
             <div class="media text-muted pt-3">
                 <img src="/{{ activity.main_user.profile_picture }}" alt="" class="mr-3 align-self-center profile-picture">
                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">@{{ activity.main_user }}</strong>
                     {% if activity.movie %}
+                        <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                        {{ activity.activity_type }}
+                        <a href="/m/{{ activity.movie.movie_id }}">{{ activity.movie.title }}</a>
+                        to their Broadway watchlist at {{ activity.created_at }}
                     {% else %}
                         <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
                         {{ activity.activity_type }}
@@ -53,30 +64,51 @@
                 </p>
             </div>
         {% endfor %}
-        <!-- <small class="d-block text-right mt-3">
-            <a href="#">All updates</a>
-        </small> -->
+        {% for activity in activities|slice:"5:" %}
+            <div class="media text-muted pt-3 hide">
+                <img src="/{{ activity.main_user.profile_picture }}" alt="" class="mr-3 align-self-center profile-picture">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@{{ activity.main_user }}</strong>
+                    {% if activity.movie %}
+                        <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                        {{ activity.activity_type }}
+                        <a href="/m/{{ activity.movie.movie_id }}">{{ activity.movie.title }}</a>
+                        to their Broadway watchlist at {{ activity.created_at }}
+                    {% else %}
+                        <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                        {{ activity.activity_type }}
+                        <a href="/u/{{ activity.activity_user }}">{% if activity.activity_user.user == request.user %}you{% else %}{{ activity.activity_user }}{% endif %}</a>
+                        at {{ activity.created_at }}
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+        <small class="d-block text-right mt-3">
+            <a class="show-updates" href="#">Show more</a>
+        </small>
     </div>
     <div class="my-4 p-4 bg-white box-shadow">
         <h6 class="border-bottom border-gray pb-2 mb-0">
             Watchlist
             <span class="badge badge-danger">{{ watchlist|length }}</span>
         </h6>
-        {% for object in watchlist %}
-        <div class="section">
-            <div class="row">
-                <div class="movie-image">
-                    <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{object.movie_watchlist_element.poster}}" alt="{{movie.title}}" width="400" height="500"></img>
-                </div>
-                <div class="heading">
-                    <h2>
-                        {{ object.movie_watchlist_element.title }}
-                    </h2>
-                    <p> <b> Overview: </b> {{ object.movie_watchlist_element.overview }} </p>
-                </div>
-            </div>
+        {% if watchlist|length == 0 %}
+        <div class="media text-muted pt-3">
+            <p class="media-body mb-0 small lh-125">
+                {{ profile }}'s Watchlist is empty.
+            </p>
         </div>
-        {% endfor %}
+        {% else %}
+            {% for we in watchlist %}
+                <div class="media text-muted pt-3">
+                    <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{ we.movie_watchlist_element.poster }}" alt="" class="mr-3 align-self-center poster">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                        <a href="/m/{{ we.movie_watchlist_element.movie_id }}"><strong class="d-block text-gray-dark">{{ we.movie_watchlist_element.title }}</strong></a>
+                        {{ we.movie_watchlist_element.overview }}
+                    </p>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
 {% block scripts %}

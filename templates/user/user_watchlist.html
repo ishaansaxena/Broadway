@@ -9,17 +9,31 @@
     Broadway - Your Watchist
 {% endblock %}
 
+<!-- Assets -->
+{% block assets %}
+    <link rel="stylesheet" href="{% static 'css/watchlist.css' %}">
+{% endblock %}
+
 <!-- Main content -->
 {% block content %}
 <div>
-	{% if watchlists %}
-		{% for watchlist in watchlists %}
-			<h2>{{watchlist.movie_watchlist_element.title}}</h2>
-			<img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{watchlist.movie_watchlist_element.poster}}" alt = "{{watchlist.movie_watchlist_element.title}}" width="400" height="500"></img>
-			<h3>{{watchlist.movie_watchlist_element.overview}}</h3>
-		{% endfor %}
-	{% else %}
-		<h2>Watchlist is empty</h2>
-	{% endif %}
+    {% if watchlists %}
+        <div class="my-4 p-4 bg-white box-shadow">
+            <h4 class="border-bottom border-gray pb-2 mb-4">
+                Your watchlist
+            </h4>
+            {% for we in watchlists %}
+                <div class="media text-muted pt-3">
+                    <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{ we.movie_watchlist_element.poster }}" alt="" class="mr-3 align-self-center poster">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                        <a href="/m/{{ we.movie_watchlist_element.movie_id }}"><strong class="d-block text-gray-dark">{{ we.movie_watchlist_element.title }}</strong></a>
+                        {{ we.movie_watchlist_element.overview }}
+                    </p>
+                </div>
+            {% endfor %}    
+        </div>
+    {% else %}
+        <h2>Watchlist is empty</h2>
+    {% endif %}
 </div>
 {% endblock %}

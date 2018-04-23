@@ -58,3 +58,19 @@ $('.heart-movie').click(function(e) {
         }
     });
 });
+
+
+var show = false;
+
+$('.hide').hide();
+$('.show-updates').click(function(e) {
+    e.preventDefault();
+    show = (!show);
+    if (show) {
+        $('.hide').slideDown();
+        $(this).text('Show less');
+    } else {
+        $('.hide').slideUp();
+        $(this).text('Show more');
+    }
+});

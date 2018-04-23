@@ -7,11 +7,13 @@ from user.models import Profile, Activity, Follow
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
-from user.models import Profile, Follow, Activity
+from user.models import Profile, Follow, Activity, Watchlist
 from django.db.models import Q
 from datetime import datetime
 from tmdbv3api import Movie as m
 from tmdbv3api import TV as t
+import tmdbv3api
+import random
 
 # Index view for broadway app. Loads main/index template
 @login_required
@@ -26,13 +28,36 @@ def index(request):
     movie = m()
     popular = movie.popular()[0:8]
     popular_movies = []
+    watchlist_movies = []
+    w = Watchlist.objects.filter(main_user=user_profile)
+    for we in w:
+        watchlist_movies.append(we.movie_watchlist_element)
     for p in popular:
         movie = getmovie(p.id)
         popular_movies.append(movie)
+    LIMIT = 20
+    watchlists = Watchlist.objects.filter(main_user=user_profile)
+    recommendations = []
+    if watchlists:
+        #user has movies in his/her watchlist
+        for watchlist in watchlists:
+            tmp_movie = tmdbv3api.Movie()
+            #get similar movies
+            similar = tmp_movie.similar(watchlist.movie_watchlist_element.movie_id)
+            for movie in similar:
+                recommendations.append(movie)
+                if len(recommendations) >= LIMIT:
+                    break
+            if len(recommendations) >= LIMIT:
+                break
+        random.shuffle(recommendations)
+        recommendations = recommendations[:4]
     context = {
         'profile': user_profile,
         'activities': activities,
         'popular': popular_movies,
+        'watchlist': watchlist_movies,
+        'discover_movies': recommendations,
     }
     return render(request, 'main/index.html', context)
 
@@ -46,11 +71,11 @@ def search(request, query):
     for res in m_search:
         movies.append(res)
     # tv search
-    tv = t()
-    t_search = tv.search(str(query))
-    tv = []
-    for res in t_search:
-        tv.append(res)
+    # tv = t()
+    # t_search = tv.search(str(query))
+    # tv = []
+    # for res in t_search:
+    #     tv.append(res)
     # user search
     users = User.objects.filter(Q(username__icontains=" ".join(query)))
     profiles = []
@@ -58,7 +83,7 @@ def search(request, query):
         profiles.append(Profile.objects.get(user=user))
     context = {
         "movies": movies,
-        "tv": tv,
+        # "tv": tv,
         "profiles": profiles,
     }
     return render(request, 'main/search.html', context)
@@ -83,7 +108,7 @@ def getmovie(ids):
             release_date = datetime.strptime(movie_this.release_date, "%Y-%m-%d").date(),
             poster = movie_this.poster_path
         )
-        print(movie_this.poster_path)
+        # print(movie_this.poster_path)
         movie_todB.save()
         movie = Movie.objects.get(movie_id=ids)
     return movie

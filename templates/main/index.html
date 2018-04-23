@@ -17,50 +17,112 @@
 <!-- Main content -->
 {% block content %}
     {% if user.is_authenticated %}
-        <div class="my-4 p-4 bg-white box-shadow">
-            <h6 class="border-bottom border-gray pb-2 mb-0">
-                Recent updates
-                <span class="badge badge-danger">{{ activities|length }}</span>
-            </h6>
-            {% for activity in activities %}
-                <div class="media text-muted pt-3">
-                    <img src="/{{ activity.main_user.profile_picture }}" alt="" class="mr-3 align-self-center profile-picture">
-                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                        <strong class="d-block text-gray-dark">@{{ activity.main_user }}</strong>
-                        {% if activity.movie %}
-                        {% else %}
-                            <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
-                            {{ activity.activity_type }}
-                            <a href="/u/{{ activity.activity_user }}">{% if activity.activity_user.user == request.user %}you{% else %}{{ activity.activity_user }}{% endif %}</a>
-                            at {{ activity.created_at }}
-                        {% endif %}
-                    </p>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="my-4 p-4 bg-white box-shadow">
-            <h4 class="border-bottom border-gray pb-2 mb-4">
-                Popular Movies
-            </h4>
-            <div class="row">
-                {% for movie in popular %}
-                <div class="col-md-3">
-                    <div class="card mb-3 box-shadow">
-                        <img class="card-img-top" src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{movie.poster}}" alt="Card image cap">
-                        <div class="card-body">
-                            <p class="card-text">{{ movie.title }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="/m/{{ movie.movie_id }}" class="btn btn-sm btn-outline-secondary">View</a>
-                                    <a href="/m/{{ movie.movie_id }}" class="btn btn-sm heart-movie btn-outline-danger"><i class="fas fa-heart"></i></a>
-                                </div>
+    <div class="my-4 p-4 bg-white box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">
+            Recent updates
+            <span class="badge badge-danger">{{ activities|length }}</span>
+        </h6>
+        {% for activity in activities|slice:":5" %}
+            <div class="media text-muted pt-3">
+                <img src="/{{ activity.main_user.profile_picture }}" alt="" class="mr-3 align-self-center profile-picture">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@{{ activity.main_user }}</strong>
+                    {% if activity.movie %}
+                        <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                        {{ activity.activity_type }}
+                        <a href="/m/{{ activity.movie.movie_id }}">{{ activity.movie.title }}</a>
+                        to their Broadway watchlist at {{ activity.created_at }}
+                    {% else %}
+                        <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                        {{ activity.activity_type }}
+                        <a href="/u/{{ activity.activity_user }}">{% if activity.activity_user.user == request.user %}you{% else %}{{ activity.activity_user }}{% endif %}</a>
+                        at {{ activity.created_at }}
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+        {% for activity in activities|slice:"5:" %}
+            <div class="media text-muted pt-3 hide">
+                <img src="/{{ activity.main_user.profile_picture }}" alt="" class="mr-3 align-self-center profile-picture">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@{{ activity.main_user }}</strong>
+                    {% if activity.movie %}
+                        <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                        {{ activity.activity_type }}
+                        <a href="/m/{{ activity.movie.movie_id }}">{{ activity.movie.title }}</a>
+                        to their Broadway watchlist at {{ activity.created_at }}
+                    {% else %}
+                        <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                        {{ activity.activity_type }}
+                        <a href="/u/{{ activity.activity_user }}">{% if activity.activity_user.user == request.user %}you{% else %}{{ activity.activity_user }}{% endif %}</a>
+                        at {{ activity.created_at }}
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+        <small class="d-block text-right mt-3">
+            <a class="show-updates" href="#">Show more</a>
+        </small>
+    </div>
+    <div class="my-4 p-4 bg-white box-shadow">
+        <h4 class="border-bottom border-gray pb-2 mb-4">
+            Popular Movies
+        </h4>
+        <div class="row">
+            {% for movie in popular %}
+            <div class="col-md-3">
+                <div class="card mb-3 box-shadow">
+                    <img class="card-img-top" src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{movie.poster}}" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">{{ movie.title }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="/m/{{ movie.movie_id }}" class="btn btn-sm btn-outline-secondary">View</a>
+                                {% if movie in watchlist %}
+                                <a href="/m/{{ movie.movie_id }}" class="btn btn-sm heart-movie btn-danger"><i class="fas fa-heart"></i></a>
+                                {% else %}
+                                <a href="/m/{{ movie.movie_id }}" class="btn btn-sm heart-movie btn-outline-danger"><i class="fas fa-heart"></i></a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
+    </div>
+    <div class="my-4 p-4 bg-white box-shadow">
+        <h4 class="border-bottom border-gray pb-2 mb-4">
+            Recommended for You
+        </h4>
+        <div class="row">
+            {% for movie in discover_movies %}
+            <div class="col-md-3">
+                <div class="card mb-3 box-shadow">
+                    <img class="card-img-top" src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{movie.poster_path}}" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>{{ movie.title }}</strong>
+                            <p>
+                                {{ movie.overview|truncatechars:100 }}
+                            </p>
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="/m/{{ movie.id }}" class="btn btn-sm btn-outline-secondary">View</a>
+                                {% if movie in watchlist %}
+                                <a href="/m/{{ movie.id }}" class="btn btn-sm heart-movie btn-danger"><i class="fas fa-heart"></i></a>
+                                {% else %}
+                                <a href="/m/{{ movie.id }}" class="btn btn-sm heart-movie btn-outline-danger"><i class="fas fa-heart"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
     {% else %}
     {% endif %}
 {% endblock %}

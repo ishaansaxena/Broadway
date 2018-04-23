@@ -12,7 +12,6 @@
 <!-- Load assets -->
 {% block assets %}
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
-<link rel="stylesheet" href="{% static 'css/activity.css' %}">
 {% endblock %}
 
 <!-- Main content -->
@@ -23,9 +22,9 @@
               <li class="nav-item">
                 <a class="search-nav nav-link active" show="movie" href="#">Movies</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="search-nav nav-link" show="tv" href="#">TV Shows</a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a class="search-nav nav-link" show="user" href="#">People</a>
               </li>
@@ -47,7 +46,7 @@
                 </p>
             </div>
         {% endfor %}
-        {% if tv|length == 0 %}
+        <!-- {% if tv|length == 0 %}
             <div class="media text-muted pt-3 tv search-result">
                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">No TV shows found.</strong>
@@ -56,13 +55,12 @@
         {% endif %}
         {% for result in tv %}
             <div class="media text-muted pt-3 tv search-result">
-                <!-- <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{result.poster}}" alt="" class="mr-3 align-self-center profile-picture"> -->
                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">{{ result.name }}</strong>
                     {{ result.overview }}
                 </p>
             </div>
-        {% endfor %}
+        {% endfor %} -->
         {% if profiles|length == 0 %}
             <div class="media text-muted pt-3 user search-result">
                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">

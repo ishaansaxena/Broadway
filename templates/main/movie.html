@@ -1,23 +1,52 @@
+<!-- Extend base file -->
+{% extends "base.html" %}
+
+<!-- Load static files -->
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name ="viewport" content="with=device-width, initial-scale=1">
-    <title>
-    	Broadway - Movies
-    </title>
-    <style>
-    body {font-family: "Lato", sans-serif}
-    .mySlides {display: none}
+<!-- Create title -->
+{% block title %}
+    Broadway - Profile
+{% endblock %}
+
+<!-- Load assets -->
+{% block assets %}
+<link rel="stylesheet" href="{% static 'css/movie.css' %}">
+<style media="screen">
+    .jumbotron::before {
+        background: url("http://image.tmdb.org/t/p/w1280{{movie.poster}}");
+    }
 </style>
-</head>
-<body>
-	<h1 class="name">{{movie.title}} </h1>
-	<img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{movie.poster}}" alt = "{{movie.title}}" width="400" height="500"></img>
-	<p> <b><b>OVERVIEW</b>: <i>{{movie.overview}}</i> </p>
-    <p> <b>RATINGS</b>: <i>{{movie.rating}}</i></p>
-    
-</body>
-</html>
+{% endblock %}
+
+<!-- Main content -->
+{% block content %}
+</main>
+<div class="jumbotron jumbotron-fluid">
+    <div class="bg"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <img class="poster" src="http://image.tmdb.org/t/p/w1280{{movie.poster}}">
+            </div>
+            <div class="col-sm-8">
+                <h1 class="display-4">{{ movie.title }}</h1>
+                <p class="lead">{{ movie.overview }}</p>
+                <hr class="my-4">
+                <p class="lead">
+                    {% if in_watchlist %}
+                    <a class="btn btn-remove btn-outline-danger btn-lg" href="#" role="button">Remove from Watchlist</a>
+                    {% else %}
+                    <a class="btn btn-add btn-primary btn-lg" href="#" role="button">Add to Watchlist</a>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<main>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/movie.js' %}"></script>
+{% endblock %}

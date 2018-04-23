@@ -90,8 +90,16 @@ def search(request, query):
 
 def moviedetails(request, ids):
     movie = getmovie(ids)
+    watchlist_movies = []
+    in_watchlist = False
+    user_profile = Profile.objects.get(user=request.user)
+    w = Watchlist.objects.filter(main_user=user_profile)
+    for we in w:
+        if movie == we.movie_watchlist_element:
+            in_watchlist = True;
     context = {
-        'movie': movie
+        'movie': movie,
+        'in_watchlist': in_watchlist,
     }
     return render(request,'main/movie.html', context)
 

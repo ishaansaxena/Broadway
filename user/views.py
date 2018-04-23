@@ -14,23 +14,6 @@ from main.models import Movie
 import main.views
 import tmdbv3api
 
-# import pyrebase
-
-# config = {
-#     'apiKey': "AIzaSyACq-nKe1xQcY4MhhPdmRfAbiyO7-qAoP4",
-#     'authDomain': "broadway-8c7ee.firebaseapp.com",
-#     'databaseURL': "https://broadway-8c7ee.firebaseio.com",
-#     'projectId': "broadway-8c7ee",
-#     'storageBucket': "broadway-8c7ee.appspot.com",
-#     'messagingSenderId': "530646122241"
-# }
-#Intialize Firebase
-# firebase = pyrebase.initialize_app(config)
-# auth = firebase.auth()
-# ref = firebase.database()
-# Require login to see own profile
-# tmdb3.set_key(settings.API_KEY)
-
 @login_required
 def profile(request):
     user_profile = Profile.objects.get(user=request.user)

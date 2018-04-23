@@ -6,7 +6,7 @@
 
 <!-- Create title -->
 {% block title %}
-    Broadway - Home
+    Broadway - Search
 {% endblock %}
 
 <!-- Load assets -->
@@ -17,16 +17,69 @@
 
 <!-- Main content -->
 {% block content %}
-    <h1>Movies</h1>
-    {% for result in movies %}
-        {{ result }}<br>
-    {% endfor %}
-    <h1>TV Shows</h1>
-    {% for result in tv %}
-        {{ result }}<br>
-    {% endfor %}
-    <h1>People</h1>
-    {% for result in profiles %}
-        {{ result }}<br>
-    {% endfor %}
+    <div class="my-4 p-4 bg-white box-shadow">
+        <h6 class="border-gray pb-2 mb-0">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="search-nav nav-link active" show="movie" href="#">Movies</a>
+              </li>
+              <li class="nav-item">
+                <a class="search-nav nav-link" show="tv" href="#">TV Shows</a>
+              </li>
+              <li class="nav-item">
+                <a class="search-nav nav-link" show="user" href="#">People</a>
+              </li>
+            </ul>
+        </h6>
+        {% if movies|length == 0 %}
+            <div class="media text-muted pt-3 movie search-result">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">No movies found.</strong>
+                </p>
+            </div>
+        {% endif %}
+        {% for result in movies %}
+            <div class="media text-muted pt-3 movie search-result">
+                <!-- <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{result.poster}}" alt="" class="mr-3 align-self-center profile-picture"> -->
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <a href="/m/{{ result.id }}"><strong class="d-block text-gray-dark">{{ result.title }}</strong></a>
+                    {{ result.overview }}
+                </p>
+            </div>
+        {% endfor %}
+        {% if tv|length == 0 %}
+            <div class="media text-muted pt-3 tv search-result">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">No TV shows found.</strong>
+                </p>
+            </div>
+        {% endif %}
+        {% for result in tv %}
+            <div class="media text-muted pt-3 tv search-result">
+                <!-- <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{result.poster}}" alt="" class="mr-3 align-self-center profile-picture"> -->
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">{{ result.name }}</strong>
+                    {{ result.overview }}
+                </p>
+            </div>
+        {% endfor %}
+        {% if profiles|length == 0 %}
+            <div class="media text-muted pt-3 user search-result">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">No profiles found.</strong>
+                </p>
+            </div>
+        {% endif %}
+        {% for result in profiles %}
+            <div class="media text-muted pt-3 user search-result">
+                <img src="/{{ result.profile_picture }}" alt="" class="mr-3 align-self-center profile-picture">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <a href="/u/{{ result }}"><strong class="d-block text-gray-dark">{{ result }}</strong>
+                </p>
+            </div>
+        {% endfor %}
+        <!-- <small class="d-block text-right mt-3">
+            <a href="#">All updates</a>
+        </small> -->
+    </div>
 {% endblock %}

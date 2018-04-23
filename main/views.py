@@ -40,13 +40,13 @@ def search(request, query):
     m_search = movie.search(str(query))
     movies = []
     for res in m_search:
-        movies.append(res.title)
+        movies.append(res)
     # tv search
     tv = t()
     t_search = tv.search(str(query))
     tv = []
     for res in t_search:
-        tv.append(res.name)
+        tv.append(res)
     # user search
     users = User.objects.filter(Q(username__icontains=" ".join(query)))
     profiles = []

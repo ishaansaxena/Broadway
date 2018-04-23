@@ -23,12 +23,16 @@ def index(request):
     for follow_relation in following:
         activities_sub = all_activities.filter(main_user=follow_relation.followed_user)
         activities.extend(list(activities_sub))
-    # everyone = User.objects.filter(is_active=True)
-    # active_not_deleted = list(filter(lambda user: user.is_deleted is False), list(everyone))
-    # active_is_deleted = list(filter(lambda user: user.is_deleted is True), list(everyone))
+    movie = m()
+    popular = movie.popular()[0:8]
+    popular_movies = []
+    for p in popular:
+        movie = getmovie(p.id)
+        popular_movies.append(movie)
     context = {
         'profile': user_profile,
         'activities': activities,
+        'popular': popular_movies,
     }
     return render(request, 'main/index.html', context)
 

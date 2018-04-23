@@ -33,3 +33,28 @@ $('.search-nav').click(function() {
     var show = "." + $(this).attr("show");
     $(show).show();
 });
+
+$('.heart-movie').click(function(e) {
+    e.preventDefault();
+    var $this = $(this);
+    var request_uri = $this.attr("href");
+    var aC, rC;
+    if ($this.hasClass("btn-outline-danger")) {
+        request_uri += "/add";
+        aC = "btn-danger";
+        rC = "btn-outline-danger";
+    } else {
+        request_uri += "/remove"
+        aC = "btn-outline-danger";
+        rC = "btn-danger";
+    }
+    console.log(request_uri);
+    $.ajax({
+        type: "POST",
+        url: request_uri,
+        success: function() {
+            $this.removeClass(rC);
+            $this.addClass(aC);
+        }
+    });
+});

@@ -11,7 +11,22 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+<<<<<<< HEAD
 import tmdbv3api
+=======
+import pyrebase
+
+config = {
+    'apiKey': "AIzaSyACq-nKe1xQcY4MhhPdmRfAbiyO7-qAoP4",
+    'authDomain': "broadway-8c7ee.firebaseapp.com",
+    'databaseURL': "https://broadway-8c7ee.firebaseio.com",
+    'projectId': "broadway-8c7ee",
+    'storageBucket': "broadway-8c7ee.appspot.com",
+    'messagingSenderId': "530646122241"
+}
+#Intialize Firebase
+firebase = pyrebase.initialize_app(config)
+>>>>>>> 4467c0831ee05d1b9065a73f4dd4b627308abafe
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +40,8 @@ SECRET_KEY = 'x5hx(8s3^(pdl(&vvzbvn04q4s_^tfk*v0vd#c8fr610nxnx_)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+ALLOWED_HOSTS = []
 
 #TMDB API Keys
 

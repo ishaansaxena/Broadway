@@ -71,24 +71,38 @@ def peer_profile(request, username):
     return render(request, 'user/peerprofile.html', context)
 
 # add movie to watchlist
+@csrf_exempt
 def add_watchlist(request, movieId):
     if request.method == "POST":
         user_profile = Profile.objects.get(user=request.user)
         movie = main.views.getmovie(movieId)
         #create a watchlist
-        watchlist = Watchlist(main_user=user_profile, movie_watchlist_element=movie)
-        watchlist.save()
+        w = Watchlist.objects.filter(main_user=user_profile)
+        alreadyexists = False
+        for m in w:
+            if m.movie_watchlist_element == movie:
+                alreadyexists = True
 
+        if alreadyexists == False:
+            watchlist = Watchlist(main_user=user_profile, movie_watchlist_element=movie)
+            watchlist.save()     
     return HttpResponse("OK")
 
 #remove watchlist
+@csrf_exempt
 def remove_watchlist(request, movieId):
     if request.method == "POST":
         user_profile = Profile.objects.get(user=request.user)
         movie = main.views.getmovie(movieId)
-        watchlist = Watchlist.objects.get(main_user=user_profile, movie_watchlist_element=movie)
-        watchlist.delete()
+        w = Watchlist.objects.filter(main_user=user_profile)
+        alreadyexists = False
+        for m in w:
+            if m.movie_watchlist_element == movie:
+                alreadyexists = True
 
+        if alreadyexists == True:
+            watchlist = Watchlist.objects.get(main_user=user_profile, movie_watchlist_element=movie)
+            watchlist.delete()
     return HttpResponse("OK")
 
 @csrf_exempt

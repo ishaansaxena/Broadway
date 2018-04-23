@@ -139,3 +139,6 @@ class Watchlist(models.Model):
         related_name="movie",
         null=True
     )
+
+    def __str__(self):
+        return str(self.main_user) + " " + str(self.movie_watchlist_element)

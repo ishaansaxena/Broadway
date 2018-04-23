@@ -1,0 +1,25 @@
+<!-- Extend base file -->
+{% extends "base.html" %}
+
+<!-- Load static files -->
+{% load static %}
+
+<!-- Create title -->
+{% block title %}
+    Broadway - Your Watchist
+{% endblock %}
+
+<!-- Main content -->
+{% block content %}
+<div>
+	{% if watchlists %}
+		{% for watchlist in watchlists %}
+			<h2>{{watchlist.movie_watchlist_element.title}}</h2>
+			<img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{watchlist.movie_watchlist_element.poster}}" alt = "{{watchlist.movie_watchlist_element.title}}" width="400" height="500"></img>
+			<h3>{{watchlist.movie_watchlist_element.overview}}</h3>
+		{% endfor %}
+	{% else %}
+		<h2>Watchlist is empty</h2>
+	{% endif %}
+</div>
+{% endblock %}

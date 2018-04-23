@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from .forms import RegistrationForm, ProfileUpdateForm
 from .models import *
+import random
 from Broadway import settings
 from main.models import Movie
 import main.views
@@ -44,6 +45,43 @@ def profile(request):
     # template = loader.get_template('user/profile.html')
     # return HttpResponse(template.render(context, request))
 
+#view user's watchlist
+def user_watchlist(request):
+    user_profile = Profile.objects.get(user=request.user)
+    watchlists = Watchlist.objects.filter(main_user=user_profile)
+
+    context = {'watchlists': watchlists}
+    return render(request, 'user/user_watchlist.html', context)
+
+def discover(request):
+    user_profile = Profile.objects.get(user=request.user)
+    watchlists = Watchlist.objects.filter(main_user=user_profile)
+    if not watchlists:
+        #if user hasnt added anything to his/her watchlist, fill discover template with the popular movies
+        movie = tmdbv3api.Movie()
+        popular = movie.popular()
+        context = {'discover_movies': popular}
+    else:
+        #user has movies in his/her watchlist
+        recommendations = []
+        for watchlist in watchlists:
+            tmp_movie = tmdbv3api.Movie()
+            #get similar movies
+            similar = tmp_movie.similar(watchlist.movie_watchlist_element.movie_id)
+            for movie in similar:
+                recommendations.append(movie)
+                if len(recommendations) >= 100:
+                    break
+
+            if len(recommendations) >= 100:
+                break
+
+        #shuffle list to have randomness in recommendations
+        random.shuffle(recommendations)
+        context = {'discover_movies': recommendations}
+
+    return render(request, 'user/discover.html', context)
+
 def peer_profile(request, username):
     if username == request.user.username:
         return redirect('profile')
@@ -59,23 +97,49 @@ def peer_profile(request, username):
             is_followed = True
     # Get activities
     activities = Activity.objects.filter(main_user=user_profile).order_by('-created_at')
+    watchlist = Watchlist.objects.filter(main_user=user_profile)
     context = {
         'profile': user_profile,
         'user': user,
         'is_followed': is_followed,
         'activities': activities,
+        'watchlist': watchlist
     }
     return render(request, 'user/peerprofile.html', context)
 
 # add movie to watchlist
+@csrf_exempt
 def add_watchlist(request, movieId):
-    if request.method == "POST":
+    if request.method == "GET":
         user_profile = Profile.objects.get(user=request.user)
-        movie = main.views.get_movie(movieId)
+        movie = main.views.getmovie(movieId)
         #create a watchlist
-        watchlist = Watchlist(main_user=user_profile, movie_watchlist_element=movie)
-        watchlist.save()
+        w = Watchlist.objects.filter(main_user=user_profile)
+        alreadyexists = False
+        for m in w:
+            if m.movie_watchlist_element == movie:
+                alreadyexists = True
 
+        if alreadyexists == False:
+            watchlist = Watchlist(main_user=user_profile, movie_watchlist_element=movie)
+            watchlist.save()     
+    return HttpResponse("OK")
+
+#remove watchlist
+@csrf_exempt
+def remove_watchlist(request, movieId):
+    if request.method == "GET":
+        user_profile = Profile.objects.get(user=request.user)
+        movie = main.views.getmovie(movieId)
+        w = Watchlist.objects.filter(main_user=user_profile)
+        alreadyexists = False
+        for m in w:
+            if m.movie_watchlist_element == movie:
+                alreadyexists = True
+
+        if alreadyexists == True:
+            watchlist = Watchlist.objects.get(main_user=user_profile, movie_watchlist_element=movie)
+            watchlist.delete()
     return HttpResponse("OK")
 
 @csrf_exempt
@@ -130,9 +194,6 @@ def unfollow(request, username):
         else:
             #If not following do nothing
             return HttpResponse("OK")
-
-def discover(request):
-    return None
 
 def register(request):
     form = RegistrationForm(request.POST or None)

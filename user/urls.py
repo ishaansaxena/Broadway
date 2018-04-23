@@ -28,6 +28,8 @@ urlpatterns = [
     ),
     url(r'^register/$', views.register, name='register'),
     url(r'^edit/$',views.edit, name='edit'),
+    url(r'^watchlist/$', views.user_watchlist, name='watchlist'),
+    url(r'^discover/$', views.discover, name='discover'),
     url(r'^(?P<username>[-\w]+)/$', views.peer_profile, name='profile_view'),
     url(r'^(?P<username>[-\w]+)/follow$', views.follow, name='profile_follow'),
     url(r'^(?P<username>[-\w]+)/unfollow$', views.unfollow, name='profile_unfollow'),

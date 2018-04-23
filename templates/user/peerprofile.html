@@ -57,4 +57,28 @@
             <a href="#">All updates</a>
         </small> -->
     </div>
+    <div class="my-4 p-4 bg-white box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">
+            Watchlist
+            <span class="badge badge-danger">{{ watchlist|length }}</span>
+        </h6>
+        {% for object in watchlist %}
+        <div class="section">
+            <div class="row">
+                <div class="movie-image">
+                    <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{object.movie_watchlist_element.poster}}" alt="{{movie.title}}" width="400" height="500"></img>
+                </div>
+                <div class="heading">
+                    <h2>
+                        {{ object.movie_watchlist_element.title }}
+                    </h2>
+                    <p> <b> Overview: </b> {{ object.movie_watchlist_element.overview }} </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'js/peer.js' %}"></script>
 {% endblock %}

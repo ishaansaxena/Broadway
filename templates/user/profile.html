@@ -44,6 +44,10 @@
                 <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">@{{ activity.main_user }}</strong>
                     {% if activity.movie %}
+                        <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
+                        {{ activity.activity_type }}
+                        <a href="/m/{{ activity.movie.movie_id }}">{{ activity.movie.title }}</a>
+                        to their Broadway watchlist at {{ activity.created_at }}
                     {% else %}
                         <a href="/u/{{ activity.main_user }}">{{ activity.main_user }}</a>
                         {{ activity.activity_type }}

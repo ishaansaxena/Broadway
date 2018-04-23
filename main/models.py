@@ -14,12 +14,8 @@ class Movie(models.Model):
     overview = models.TextField(null=True)
     #movie release date
     release_date = models.DateField(null=True)
-    #user ratings of movie
-    rating = models.FloatField(null=True)
     #poster representing movie
-    poster = models.ImageField(
-        upload_to='static/assets/movies_images/',
-        default='static/assets/movies_images/default.png',
+    poster = models.SlugField(
         blank=True
     )
 

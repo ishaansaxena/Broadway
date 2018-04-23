@@ -9,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
 from user.models import Profile, Follow, Activity
 from django.db.models import Q
-
+from datetime import datetime
 from tmdbv3api import Movie as m
 from tmdbv3api import TV as t
 
@@ -59,13 +59,30 @@ def search(request, query):
     }
     return render(request, 'main/search.html', context)
 
-def moviedetails(request):
-    #TODO: Change get(id=request.id)
-    movie = Movie.objects.get(id=1234)
+def moviedetails(request, ids):
+    movie = getmovie(ids)
     context = {
         'movie': movie
     }
     return render(request,'main/movie.html', context)
+
+def getmovie(ids):
+    try:
+        movie = Movie.objects.get(movie_id=ids)
+    except Exception:
+        movie = m()
+        movie_this = movie.details(ids)
+        movie_todB = Movie(
+            movie_id=movie_this.id,
+            title=movie_this.title,
+            overview=movie_this.overview,
+            release_date = datetime.strptime(movie_this.release_date, "%Y-%m-%d").date(),
+            poster = movie_this.poster_path
+        )
+        print(movie_this.poster_path)
+        movie_todB.save()
+        movie = Movie.objects.get(movie_id=ids)
+    return movie
 
 #
 # def searchMovie(request, movieId):

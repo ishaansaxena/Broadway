@@ -142,33 +142,6 @@ def unfollow(request, username):
             #If not following do nothing
             return HttpResponse("OK")
 
-def discover(request):
-    if request.method == "POST":
-        user_profile = Profile.objects.get(user=user_profile)
-        watchlists = Watchlist.objects.filter(main_user=user_profile)
-        if not watchlists:
-            #if user hasnt added anything to his/her watchlist, fill discover template with the popular movies
-            movie = tmdbv3api.Movie()
-            popular = movie.popular()
-            context = {'discover_movies': popular}
-        else:
-            #user has movies in his/her watchlist
-            recommendations = []
-            for watchlist in watchlists:
-                tmp_movie = tmdbv3api.Movie()
-                #get similar movies
-                similar = tmp_movie.similar(watchlist.movie_watchlist_element.id)
-                for movie in similar:
-                    recommendations.append(movie)
-
-            #shuffle list to have randomness in recommendations
-            random.shuffle(recommendations)
-            context = {'discover_movies': recommendations}
-
-        return render(request, 'user/discover.html', context)
-
-    return HttpResponse("OK")
-
 def register(request):
     form = RegistrationForm(request.POST or None)
     if request.method == 'POST':

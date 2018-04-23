@@ -1,0 +1,21 @@
+<!-- Extend base file -->
+{% extends "base.html" %}
+
+<!-- Load static files -->
+{% load static %}
+
+<!-- Create title -->
+{% block title %}
+    Broadway - Discover
+{% endblock %}
+
+<!-- Main content -->
+{% block content %}
+<div>
+	{% for movie in discover_movies %}
+		<h2>{{movie.title}}</h2>
+		<img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{movie.poster_path}}" alt = "{{movie.title}}" width="400" height="500"></img>
+		<h3>{{movie.popularity}}</h3>
+	{% endfor %}
+</div>
+{% endblock %}

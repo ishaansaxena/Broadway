@@ -112,6 +112,7 @@ def getsimilar(ids):
     close = []
     Limit = 8
     for movie in similar:
+        movie = getmovie(movie.id)
         close.append(movie)
         if (len(close) >= Limit):
             break

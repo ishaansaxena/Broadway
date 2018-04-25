@@ -40,12 +40,24 @@
                     <a class="btn btn-add btn-primary btn-lg" href="#" role="button">Add to Watchlist</a>
                     {% endif %}
                 </p>
-                {% for s in similar %}
-                <p> {{s.title }} </p>
-                {% endfor %}
             </div>
         </div>
-
+    </div>
+</div>
+<div class="container">
+    <div class="my-4 p-4 bg-white box-shadow">
+        <h4 class="border-bottom border-gray pb-2 mb-4">
+            Similar to {{ movie.title }}
+        </h4>
+        {% for movie in similar %}
+            <div class="media text-muted pt-3">
+                <img src="http://image.tmdb.org/t/p/w300_and_h450_bestv2{{ movie.poster }}" alt="" class="mr-3 align-self-center similar-poster">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <a href="/m/{{ movie.movie_id }}"><strong class="d-block text-gray-dark">{{ movie.title }}</strong></a>
+                    {{ movie.overview }}
+                </p>
+            </div>
+        {% endfor %}
     </div>
 </div>
 <main>

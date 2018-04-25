@@ -23,3 +23,7 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
 }
+
+.similar-poster {
+    width: 3rem;
+}

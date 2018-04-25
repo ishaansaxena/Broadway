@@ -168,7 +168,8 @@ def discover(request):
             #get similar movies
             similar = tmp_movie.similar(watchlist.movie_watchlist_element.movie_id)
             for movie in similar:
-                recommendations.append(movie)
+                if movie not in recommendations:
+                    recommendations.append(movie)
                 if len(recommendations) >= LIMIT:
                     break
             if len(recommendations) >= LIMIT:

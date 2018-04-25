@@ -163,16 +163,11 @@ def discover(request):
     else:
         #user has movies in his/her watchlist
         recommendations = []
-        watchlist_movies = []
-        w = Watchlist.objects.filter(main_user=user_profile)
-        for we in w:
-            watchlist_movies.append(we.movie_watchlist_element)
         for watchlist in watchlists:
             tmp_movie = tmdbv3api.Movie()
             #get similar movies
             similar = tmp_movie.similar(watchlist.movie_watchlist_element.movie_id)
             for movie in similar:
-                movie = main.views.getmovie(movie.id)
                 recommendations.append(movie)
                 if len(recommendations) >= LIMIT:
                     break
@@ -183,7 +178,6 @@ def discover(request):
         random.shuffle(recommendations)
         context = {
             'discover_movies': recommendations,
-            'watchlist': watchlist_movies,
         }
     return render(request, 'user/discover.html', context)
 

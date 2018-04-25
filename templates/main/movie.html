@@ -40,6 +40,9 @@
                     <a class="btn btn-add btn-primary btn-lg" href="#" role="button">Add to Watchlist</a>
                     {% endif %}
                 </p>
+                {% for s in similar %}
+                <p> {{s.title }} </p>
+                {% endfor %}
             </div>
         </div>
 

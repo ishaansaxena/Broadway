@@ -97,11 +97,25 @@ def moviedetails(request, ids):
     for we in w:
         if movie == we.movie_watchlist_element:
             in_watchlist = True;
+
+    similar = getsimilar(ids)
     context = {
         'movie': movie,
         'in_watchlist': in_watchlist,
+        'similar': similar
     }
     return render(request,'main/movie.html', context)
+
+def getsimilar(ids):
+    mov = m()
+    similar = mov.similar(ids)
+    close = []
+    Limit = 8
+    for movie in similar:
+        close.append(movie)
+        if (len(close) >= Limit):
+            break
+    return close
 
 def getmovie(ids):
     try:
